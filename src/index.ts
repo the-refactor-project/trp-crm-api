@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import connectToDb from "./db/index.js";
+import connectToDb from "./database/index.js";
 import startServer from "./server/startServer.js";
 
 const port = process.env.PORT || 4005;

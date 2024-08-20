@@ -3,10 +3,16 @@ import MovementEntity from "../MovementEntity.js";
 
 const movementSchema = new Schema<MovementEntity>({
   type: {
+    type: String,
     enum: ["in", "out"],
     required: true,
   },
+  description: {
+    type: String,
+    required: true,
+  },
   currency: {
+    type: String,
     enum: ["EUR", "USD"],
     required: true,
   },

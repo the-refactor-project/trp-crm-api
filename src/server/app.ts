@@ -6,6 +6,7 @@ import {
   generalError,
   notFoundError,
 } from "./errors/middlewares/errorMiddlewares.js";
+import movementsRouter from "../movement/router/movementsRouter.js";
 
 const app = express();
 
@@ -13,6 +14,8 @@ app.use(cors());
 app.use(morgan("dev"));
 
 app.get("/", healthCheckController);
+
+app.use("/movements", movementsRouter);
 
 app.use(notFoundError);
 app.use(generalError);
