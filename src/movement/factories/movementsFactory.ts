@@ -7,6 +7,7 @@ const movementsFactory = Factory.define<MovementEntity>(() => ({
   description: faker.finance.transactionDescription(),
   quantity: Number(faker.finance.amount()),
   type: faker.helpers.arrayElement(["in", "out"]),
+  date: faker.date.recent(),
 }));
 
 export const createMockMovements = (number = 2): MovementEntity[] =>

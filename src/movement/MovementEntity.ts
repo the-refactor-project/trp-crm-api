@@ -3,6 +3,7 @@ class MovementEntity {
   description: string;
   currency: "EUR" | "USD";
   quantity: number;
+  date: Date;
 }
 
 export default MovementEntity;

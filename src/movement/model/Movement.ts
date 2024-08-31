@@ -20,6 +20,10 @@ const movementSchema = new Schema<MovementEntity>({
     type: Number,
     required: true,
   },
+  date: {
+    type: Date,
+    required: true,
+  },
 });
 
 const Movement = model("Movement", movementSchema, "movements");

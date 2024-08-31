@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import Movement from "../../model/Movement";
 import MovementEntity from "../../MovementEntity";
 import { createMockMovements } from "../../factories/movementsFactory";
+import MovementDto from "../../dto/movementDto";
 
 let server: MongoMemoryServer;
 
@@ -31,7 +32,7 @@ describe("Given a GET /movements endpoint", () => {
 
       movements.forEach((movement, index) => {
         expect(responseBody.movements[index]).toEqual(
-          expect.objectContaining(movement)
+          expect.objectContaining(new MovementDto(movement))
         );
       });
     });
