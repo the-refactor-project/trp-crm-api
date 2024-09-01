@@ -1,7 +1,9 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
+import { Error } from "mongoose";
 import { MovementsControllerStructure } from "./types";
 import { MovementsRepositoryStructure } from "../repository/types";
 import { MovementEntityData } from "../MovementEntity";
+import ServerError from "../../server/errors/ServerError/ServerError.js";
 
 class MovementsController implements MovementsControllerStructure {
   constructor(private movementsRepository: MovementsRepositoryStructure) {}
@@ -18,15 +20,35 @@ class MovementsController implements MovementsControllerStructure {
       Record<string, unknown>,
       MovementEntityData
     >,
-    res: Response
+    res: Response,
+    next: NextFunction,
   ): Promise<void> => {
     const newMovementData = req.body;
 
-    const movement = await this.movementsRepository.addMovement(
-      newMovementData
-    );
+    try {
+      const movement =
+        await this.movementsRepository.addMovement(newMovementData);
 
-    res.status(201).json({ movement });
+      res.status(201).json({ movement });
+    } catch (error) {
+      let serverError: ServerError;
+
+      if (error instanceof Error.ValidationError) {
+        serverError = new ServerError(
+          "Missing or wrong data",
+          400,
+          error.message,
+        );
+      } else {
+        serverError = new ServerError(
+          "Error creating the movement",
+          500,
+          error.message,
+        );
+      }
+
+      next(serverError);
+    }
   };
 }
 
