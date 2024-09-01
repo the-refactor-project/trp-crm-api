@@ -1,5 +1,5 @@
 import { Model } from "mongoose";
-import MovementEntity from "../MovementEntity";
+import { MovementEntity, MovementEntityData } from "../MovementEntity";
 import { MovementsRepositoryStructure } from "./types";
 
 class MovementsRepository implements MovementsRepositoryStructure {
@@ -9,6 +9,12 @@ class MovementsRepository implements MovementsRepositoryStructure {
     const movements = await this.movement.find().exec();
 
     return movements;
+  }
+
+  async addMovement(movementData: MovementEntityData): Promise<MovementEntity> {
+    const newMovement = await this.movement.create(movementData);
+
+    return newMovement;
   }
 }
 

@@ -1,4 +1,4 @@
-import MovementEntity from "../MovementEntity";
+import { MovementEntity } from "../MovementEntity";
 
 class MovementDto {
   type: string;

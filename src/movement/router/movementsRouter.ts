@@ -9,5 +9,6 @@ const movementsRepository = new MovementsRepository(Movement);
 const movementsController = new MovementsController(movementsRepository);
 
 movementsRouter.get("/", movementsController.getMovements);
+movementsRouter.post("/", movementsController.addMovement);
 
 export default movementsRouter;

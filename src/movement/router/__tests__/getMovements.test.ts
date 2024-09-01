@@ -1,10 +1,10 @@
 import request from "supertest";
+import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import app from "../../../server/app";
 import connectToDb from "../../../database";
-import mongoose from "mongoose";
 import Movement from "../../model/Movement";
-import MovementEntity from "../../MovementEntity";
+import { MovementEntity } from "../../MovementEntity";
 import { createMockMovements } from "../../factories/movementsFactory";
 import MovementDto from "../../dto/movementDto";
 
@@ -20,8 +20,8 @@ describe("Given a GET /movements endpoint", () => {
     test("Then it should respond with 200 and two movements 'test in' and 'test out'", async () => {
       const movements = createMockMovements(2);
 
-      for await (const moviment of movements) {
-        await Movement.create(moviment);
+      for await (const movement of movements) {
+        await Movement.create(movement);
       }
 
       const response = await request(app).get("/movements").expect(200);

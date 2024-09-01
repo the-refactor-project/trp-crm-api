@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import MovementEntity from "../MovementEntity.js";
+import { MovementEntity } from "../MovementEntity.js";
 
 const movementSchema = new Schema<MovementEntity>({
   type: {

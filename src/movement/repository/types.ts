@@ -1,5 +1,6 @@
-import MovimentEntity from "../MovementEntity";
+import { MovementEntity, MovementEntityData } from "../MovementEntity";
 
 export interface MovementsRepositoryStructure {
-  getMovements: () => Promise<MovimentEntity[]>;
+  getMovements: () => Promise<MovementEntity[]>;
+  addMovement: (movementData: MovementEntityData) => Promise<MovementEntity>;
 }

@@ -11,6 +11,7 @@ import movementsRouter from "../movement/router/movementsRouter.js";
 const app = express();
 
 app.use(cors());
+app.use(express.json());
 app.use(morgan("dev"));
 
 app.get("/", healthCheckController);
