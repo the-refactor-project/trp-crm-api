@@ -1,19 +1,9 @@
 import request from "supertest";
-import mongoose from "mongoose";
-import { MongoMemoryServer } from "mongodb-memory-server";
 import app from "../../../server/app";
-import connectToDb from "../../../database";
 import Movement from "../../model/Movement";
 import { MovementEntity } from "../../MovementEntity";
 import { createMockMovements } from "../../factories/movementsFactory";
 import MovementDto from "../../dto/movementDto";
-
-let server: MongoMemoryServer;
-
-beforeAll(async () => {
-  server = await MongoMemoryServer.create();
-  await connectToDb(server.getUri());
-});
 
 describe("Given a GET /movements endpoint", () => {
   describe("When it receives a request", () => {
@@ -32,14 +22,9 @@ describe("Given a GET /movements endpoint", () => {
 
       movements.forEach((movement, index) => {
         expect(responseBody.movements[index]).toEqual(
-          expect.objectContaining(new MovementDto(movement))
+          expect.objectContaining(new MovementDto(movement)),
         );
       });
     });
   });
-});
-
-afterAll(async () => {
-  await mongoose.disconnect();
-  await server.stop();
 });

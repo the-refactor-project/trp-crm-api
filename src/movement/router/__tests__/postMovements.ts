@@ -1,18 +1,8 @@
 import request from "supertest";
-import mongoose from "mongoose";
-import { MongoMemoryServer } from "mongodb-memory-server";
 import app from "../../../server/app";
-import connectToDb from "../../../database";
 import { MovementEntity } from "../../MovementEntity";
 import { createMockMovementDatas } from "../../factories/movementsFactory";
 import MovementDto from "../../dto/movementDto";
-
-let server: MongoMemoryServer;
-
-beforeAll(async () => {
-  server = await MongoMemoryServer.create();
-  await connectToDb(server.getUri());
-});
 
 describe("Given a POST /movements endpoint", () => {
   describe("When it receives a request with a new movement's data", () => {
@@ -30,14 +20,9 @@ describe("Given a POST /movements endpoint", () => {
 
       expect(responseBody.movement).toEqual(
         expect.objectContaining(
-          new MovementDto(newMovementData as MovementEntity)
-        )
+          new MovementDto(newMovementData as MovementEntity),
+        ),
       );
     });
   });
-});
-
-afterAll(async () => {
-  await mongoose.disconnect();
-  await server.stop();
 });
