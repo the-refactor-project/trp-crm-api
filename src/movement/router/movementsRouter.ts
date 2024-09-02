@@ -10,5 +10,6 @@ const movementsController = new MovementsController(movementsRepository);
 
 movementsRouter.get("/", movementsController.getMovements);
 movementsRouter.post("/", movementsController.addMovement);
+movementsRouter.delete("/:movementId", movementsController.deleteMovementById);
 
 export default movementsRouter;

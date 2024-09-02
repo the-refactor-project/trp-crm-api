@@ -5,6 +5,10 @@ import { MovementEntity } from "../../MovementEntity";
 import { createMockMovements } from "../../factories/movementsFactory";
 import MovementDto from "../../dto/movementDto";
 
+afterEach(async () => {
+  await Movement.deleteMany();
+});
+
 describe("Given a GET /movements endpoint", () => {
   describe("When it receives a request", () => {
     test("Then it should respond with 200 and two movements 'test in' and 'test out'", async () => {
