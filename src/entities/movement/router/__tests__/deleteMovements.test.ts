@@ -1,38 +1,20 @@
 import request from "supertest";
-import app from "../../../server/app";
+import app from "../../../../server/app";
 import { createMockMovements } from "../../factories/movementsFactory";
 import Movement from "../../model/Movement";
-import { MovementEntity } from "../../MovementEntity";
-import MovementDto from "../../dto/movementDto";
 
 afterEach(async () => {
   await Movement.deleteMany();
 });
 
-describe("Given a PUT /movements/:movementId endpoint", () => {
+describe("Given a DELETE /movements/:movementId endpoint", () => {
   describe("When it receives a request with an existing id", () => {
-    test("Then it should respond with 200 and the updated movement", async () => {
+    test("Then it should respond with 200", async () => {
       const movement = createMockMovements(1)[0];
 
       await Movement.create(movement);
 
-      const updatedMovement: MovementEntity = {
-        ...movement,
-        quantity: movement.quantity + 10,
-      };
-
-      const response = await request(app)
-        .put("/movements")
-        .send(updatedMovement)
-        .expect(200);
-
-      const responseBody = response.body as {
-        movement: MovementEntity;
-      };
-
-      expect(responseBody.movement).toEqual(
-        expect.objectContaining(new MovementDto(updatedMovement)),
-      );
+      await request(app).delete(`/movements/${movement._id}`).expect(200);
     });
   });
 
@@ -41,8 +23,7 @@ describe("Given a PUT /movements/:movementId endpoint", () => {
       const movement = createMockMovements(1)[0];
 
       const response = await request(app)
-        .put("/movements")
-        .send(movement)
+        .delete(`/movements/${movement._id}`)
         .expect(404);
 
       const responseBody: {
@@ -55,13 +36,10 @@ describe("Given a PUT /movements/:movementId endpoint", () => {
 
   describe("When it receives a request with an invalid id", () => {
     test("Then it should respond with 400 and a 'Invalid id' error", async () => {
-      const movement = createMockMovements(1)[0];
-
-      movement._id = "invalid-id";
+      const invalidId = "invalid-id";
 
       const response = await request(app)
-        .put("/movements")
-        .send(movement)
+        .delete(`/movements/${invalidId}`)
         .expect(400);
 
       const responseBody: {

@@ -9,9 +9,15 @@ const movementsRepository = new MovementsRepository(Movement);
 const movementsController = new MovementsController(movementsRepository);
 
 movementsRouter.get("/", movementsController.getMovements);
-movementsRouter.get("/:movementId", movementsController.getMovementById);
+movementsRouter.get(
+  "/:movementCategoryId",
+  movementsController.getMovementById,
+);
 movementsRouter.post("/", movementsController.addMovement);
 movementsRouter.put("/", movementsController.updateMovementById);
-movementsRouter.delete("/:movementId", movementsController.deleteMovementById);
+movementsRouter.delete(
+  "/:movementCategoryId",
+  movementsController.deleteMovementById,
+);
 
 export default movementsRouter;

@@ -1,5 +1,5 @@
 import request from "supertest";
-import app from "../../../server/app";
+import app from "../../../../server/app";
 import { MovementEntity, MovementEntityData } from "../../MovementEntity";
 import { createMockMovementDatas } from "../../factories/movementsFactory";
 import MovementDto from "../../dto/movementDto";

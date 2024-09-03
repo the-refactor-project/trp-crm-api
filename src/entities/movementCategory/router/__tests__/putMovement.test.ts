@@ -1,23 +1,29 @@
 import request from "supertest";
-import app from "../../../server/app";
-import { createMockMovements } from "../../factories/movementsFactory";
+import app from "../../../../server/app";
+import { createMockMovementCategories } from "../../factories/movementCategoriesFactory";
 import Movement from "../../model/Movement";
 import { MovementEntity } from "../../MovementEntity";
-import MovementDto from "../../dto/movementDto";
+import MovementCategoryDto from "../../dto/movementCategoryDto";
 
 afterEach(async () => {
   await Movement.deleteMany();
 });
 
-describe("Given a GET /movements/:movementId endpoint", () => {
+describe("Given a PUT /movements/:movementId endpoint", () => {
   describe("When it receives a request with an existing id", () => {
-    test("Then it should respond with 200 and the movement", async () => {
-      const movement = createMockMovements(1)[0];
+    test("Then it should respond with 200 and the updated movement", async () => {
+      const movement = createMockMovementCategories(1)[0];
 
       await Movement.create(movement);
 
+      const updatedMovement: MovementEntity = {
+        ...movement,
+        quantity: movement.quantity + 10,
+      };
+
       const response = await request(app)
-        .get(`/movements/${movement._id}`)
+        .put("/movements")
+        .send(updatedMovement)
         .expect(200);
 
       const responseBody = response.body as {
@@ -25,17 +31,18 @@ describe("Given a GET /movements/:movementId endpoint", () => {
       };
 
       expect(responseBody.movement).toEqual(
-        expect.objectContaining(new MovementDto(movement)),
+        expect.objectContaining(new MovementCategoryDto(updatedMovement)),
       );
     });
   });
 
   describe("When it receives a request with a non existing id", () => {
     test("Then it should respond with 404 and a 'Movement not found", async () => {
-      const movement = createMockMovements(1)[0];
+      const movement = createMockMovementCategories(1)[0];
 
       const response = await request(app)
-        .get(`/movements/${movement._id}`)
+        .put("/movements")
+        .send(movement)
         .expect(404);
 
       const responseBody: {
@@ -48,10 +55,13 @@ describe("Given a GET /movements/:movementId endpoint", () => {
 
   describe("When it receives a request with an invalid id", () => {
     test("Then it should respond with 400 and a 'Invalid id' error", async () => {
-      const invalidId = "invalid-id";
+      const movement = createMockMovementCategories(1)[0];
+
+      movement._id = "invalid-id";
 
       const response = await request(app)
-        .get(`/movements/${invalidId}`)
+        .put("/movements")
+        .send(movement)
         .expect(400);
 
       const responseBody: {
