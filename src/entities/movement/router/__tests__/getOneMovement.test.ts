@@ -1,20 +1,32 @@
 import request from "supertest";
-import app from "../../../server/app";
+import app from "../../../../server/app";
 import { createMockMovements } from "../../factories/movementsFactory";
 import Movement from "../../model/Movement";
+import { MovementEntity } from "../../MovementEntity";
+import MovementDto from "../../dto/movementDto";
 
 afterEach(async () => {
   await Movement.deleteMany();
 });
 
-describe("Given a DELETE /movements/:movementId endpoint", () => {
+describe("Given a GET /movements/:movementId endpoint", () => {
   describe("When it receives a request with an existing id", () => {
-    test("Then it should respond with 200", async () => {
+    test("Then it should respond with 200 and the movement", async () => {
       const movement = createMockMovements(1)[0];
 
       await Movement.create(movement);
 
-      await request(app).delete(`/movements/${movement._id}`).expect(200);
+      const response = await request(app)
+        .get(`/movements/${movement._id}`)
+        .expect(200);
+
+      const responseBody = response.body as {
+        movement: MovementEntity;
+      };
+
+      expect(responseBody.movement).toEqual(
+        expect.objectContaining(new MovementDto(movement)),
+      );
     });
   });
 
@@ -23,7 +35,7 @@ describe("Given a DELETE /movements/:movementId endpoint", () => {
       const movement = createMockMovements(1)[0];
 
       const response = await request(app)
-        .delete(`/movements/${movement._id}`)
+        .get(`/movements/${movement._id}`)
         .expect(404);
 
       const responseBody: {
@@ -39,7 +51,7 @@ describe("Given a DELETE /movements/:movementId endpoint", () => {
       const invalidId = "invalid-id";
 
       const response = await request(app)
-        .delete(`/movements/${invalidId}`)
+        .get(`/movements/${invalidId}`)
         .expect(400);
 
       const responseBody: {

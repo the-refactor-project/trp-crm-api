@@ -6,7 +6,7 @@ import {
   generalError,
   notFoundError,
 } from "./errors/middlewares/errorMiddlewares.js";
-import movementsRouter from "../movement/router/movementsRouter.js";
+import movementsRouter from "../entities/movement/router/movementsRouter.js";
 
 const app = express();
 

@@ -5,6 +5,7 @@ export class MovementEntityData {
   quantity: number;
   date: Date;
 }
+
 export class MovementEntity extends MovementEntityData {
   _id: string;
 }

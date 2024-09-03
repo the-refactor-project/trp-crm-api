@@ -3,7 +3,7 @@ import { Error } from "mongoose";
 import { MovementsControllerStructure } from "./types";
 import { MovementsRepositoryStructure } from "../repository/types";
 import { MovementEntity, MovementEntityData } from "../MovementEntity";
-import ServerError from "../../server/errors/ServerError/ServerError.js";
+import ServerError from "../../../server/errors/ServerError/ServerError.js";
 
 class MovementsController implements MovementsControllerStructure {
   constructor(private movementsRepository: MovementsRepositoryStructure) {}
