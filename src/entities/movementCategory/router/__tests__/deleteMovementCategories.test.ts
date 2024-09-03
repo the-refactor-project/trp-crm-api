@@ -1,36 +1,38 @@
 import request from "supertest";
 import app from "../../../../server/app";
 import { createMockMovementCategories } from "../../factories/movementCategoriesFactory";
-import Movement from "../../model/Movement";
+import MovementCategory from "../../model/MovementCategory";
 
 afterEach(async () => {
-  await Movement.deleteMany();
+  await MovementCategory.deleteMany();
 });
 
-describe("Given a DELETE /movements/:movementId endpoint", () => {
+describe("Given a DELETE /movement-categories/:movementCategoryId endpoint", () => {
   describe("When it receives a request with an existing id", () => {
     test("Then it should respond with 200", async () => {
-      const movement = createMockMovementCategories(1)[0];
+      const movementCategory = createMockMovementCategories(1)[0];
 
-      await Movement.create(movement);
+      await MovementCategory.create(movementCategory);
 
-      await request(app).delete(`/movements/${movement._id}`).expect(200);
+      await request(app)
+        .delete(`/movement-categories/${movementCategory._id}`)
+        .expect(200);
     });
   });
 
   describe("When it receives a request with a non existing id", () => {
-    test("Then it should respond with 404 and a 'Movement not found", async () => {
-      const movement = createMockMovementCategories(1)[0];
+    test("Then it should respond with 404 and a 'Category not found", async () => {
+      const movementCategory = createMockMovementCategories(1)[0];
 
       const response = await request(app)
-        .delete(`/movements/${movement._id}`)
+        .delete(`/movement-categories/${movementCategory._id}`)
         .expect(404);
 
       const responseBody: {
         error: string;
       } = response.body;
 
-      expect(responseBody.error).toBe("Movement not found");
+      expect(responseBody.error).toBe("Category not found");
     });
   });
 
@@ -39,7 +41,7 @@ describe("Given a DELETE /movements/:movementId endpoint", () => {
       const invalidId = "invalid-id";
 
       const response = await request(app)
-        .delete(`/movements/${invalidId}`)
+        .delete(`/movement-categories/${invalidId}`)
         .expect(400);
 
       const responseBody: {
