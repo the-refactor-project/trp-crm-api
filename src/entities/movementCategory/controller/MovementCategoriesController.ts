@@ -70,12 +70,12 @@ class MovementCategoriesController
     const newMovementCategoryData = req.body;
 
     try {
-      const movement =
+      const movementCategory =
         await this.movementsCategoriesRepository.addMovementCategory(
           newMovementCategoryData,
         );
 
-      res.status(201).json({ movement });
+      res.status(201).json({ movementCategory });
     } catch (error) {
       let serverError: ServerError;
 
@@ -109,18 +109,18 @@ class MovementCategoriesController
     try {
       const movement = req.body;
 
-      const updatedMovement =
+      const updatedMovementCategory =
         await this.movementsCategoriesRepository.updateMovementCategoryById(
           movement,
         );
 
-      res.status(200).json({ movement: updatedMovement });
+      res.status(200).json({ movementCategory: updatedMovementCategory });
     } catch (error) {
       let serverError: ServerError;
 
       if (error instanceof Error.CastError) {
         serverError = new ServerError("Invalid id", 400, error.message);
-      } else if (error.message === "Movement not found") {
+      } else if (error.message === "Category not found") {
         serverError = new ServerError(error.message, 404, error.message);
       } else {
         serverError = new ServerError(
