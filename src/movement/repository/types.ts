@@ -6,5 +6,6 @@ export interface MovementsRepositoryStructure {
     movementInd: MovementEntity["_id"],
   ) => Promise<MovementEntity>;
   addMovement: (movementData: MovementEntityData) => Promise<MovementEntity>;
+  updateMovementById: (movement: MovementEntity) => Promise<MovementEntity>;
   deleteMovementById: (movementId: MovementEntity["_id"]) => Promise<void>;
 }

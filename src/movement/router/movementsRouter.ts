@@ -11,6 +11,7 @@ const movementsController = new MovementsController(movementsRepository);
 movementsRouter.get("/", movementsController.getMovements);
 movementsRouter.get("/:movementId", movementsController.getMovementById);
 movementsRouter.post("/", movementsController.addMovement);
+movementsRouter.put("/", movementsController.updateMovementById);
 movementsRouter.delete("/:movementId", movementsController.deleteMovementById);
 
 export default movementsRouter;

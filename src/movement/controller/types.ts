@@ -17,6 +17,15 @@ export interface MovementsControllerStructure {
     res: Response,
     next: NextFunction,
   ) => Promise<void>;
+  updateMovementById: (
+    req: Request<
+      { movementId: MovementEntity["_id"] },
+      Record<string, unknown>,
+      MovementEntity
+    >,
+    res: Response,
+    next: NextFunction,
+  ) => Promise<void>;
   deleteMovementById: (
     req: Request<{ movementId: MovementEntity["_id"] }>,
     res: Response,

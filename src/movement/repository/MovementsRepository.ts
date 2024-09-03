@@ -29,6 +29,22 @@ class MovementsRepository implements MovementsRepositoryStructure {
     return newMovement;
   }
 
+  async updateMovementById(movement: MovementEntity): Promise<MovementEntity> {
+    const updatedMovement = await this.movement.findByIdAndUpdate(
+      movement._id,
+      movement,
+      {
+        new: true,
+      },
+    );
+
+    if (!updatedMovement) {
+      throw new Error("Movement not found");
+    }
+
+    return updatedMovement;
+  }
+
   async deleteMovementById(movementId: MovementEntity["_id"]): Promise<void> {
     const deletedMovement = await this.movement.findByIdAndDelete(movementId);
 

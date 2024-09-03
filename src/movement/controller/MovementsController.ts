@@ -82,6 +82,41 @@ class MovementsController implements MovementsControllerStructure {
     }
   };
 
+  updateMovementById = async (
+    req: Request<
+      Record<string, unknown>,
+      Record<string, unknown>,
+      MovementEntity
+    >,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const movement = req.body;
+
+      const updatedMovement =
+        await this.movementsRepository.updateMovementById(movement);
+
+      res.status(200).json({ movement: updatedMovement });
+    } catch (error) {
+      let serverError: ServerError;
+
+      if (error instanceof Error.CastError) {
+        serverError = new ServerError("Invalid id", 400, error.message);
+      } else if (error.message === "Movement not found") {
+        serverError = new ServerError(error.message, 404, error.message);
+      } else {
+        serverError = new ServerError(
+          "Error deleting the movement",
+          500,
+          error.message,
+        );
+      }
+
+      next(serverError);
+    }
+  };
+
   deleteMovementById = async (
     req: Request<{ movementId: MovementEntity["_id"] }>,
     res: Response,
