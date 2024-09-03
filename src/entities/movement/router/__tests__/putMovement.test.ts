@@ -27,10 +27,10 @@ describe("Given a PUT /movements/:movementId endpoint", () => {
         .expect(200);
 
       const responseBody = response.body as {
-        movement: MovementEntity;
+        updatedMovement: MovementEntity;
       };
 
-      expect(responseBody.movement).toEqual(
+      expect(responseBody.updatedMovement).toEqual(
         expect.objectContaining(new MovementDto(updatedMovement)),
       );
     });
