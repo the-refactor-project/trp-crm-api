@@ -21,10 +21,10 @@ describe("Given a GET /movement-categories/:movementCategoryId endpoint", () => 
         .expect(200);
 
       const responseBody = response.body as {
-        movementCategory: MovementCategoryEntity;
+        category: MovementCategoryEntity;
       };
 
-      expect(responseBody.movementCategory).toEqual(
+      expect(responseBody.category).toEqual(
         expect.objectContaining(new MovementCategoryDto(movementCategory)),
       );
     });

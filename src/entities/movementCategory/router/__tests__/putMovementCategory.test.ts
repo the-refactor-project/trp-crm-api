@@ -9,7 +9,7 @@ afterEach(async () => {
   await MovementCategory.deleteMany();
 });
 
-describe("Given a PUT /movement-categories/:movementCategoryId endpoint", () => {
+describe("Given a PUT /movement-categories/:id endpoint", () => {
   describe("When it receives a request with an existing id", () => {
     test("Then it should respond with 200 and the updated category", async () => {
       const movementCategory = createMockMovementCategories(1)[0];
@@ -27,10 +27,10 @@ describe("Given a PUT /movement-categories/:movementCategoryId endpoint", () => 
         .expect(200);
 
       const responseBody = response.body as {
-        movementCategory: MovementCategoryEntity;
+        updatedCategory: MovementCategoryEntity;
       };
 
-      expect(responseBody.movementCategory).toEqual(
+      expect(responseBody.updatedCategory).toEqual(
         expect.objectContaining(
           new MovementCategoryDto(updatedMovementCategory),
         ),

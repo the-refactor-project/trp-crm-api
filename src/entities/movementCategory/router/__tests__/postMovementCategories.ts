@@ -18,10 +18,10 @@ describe("Given a POST /movement-categories endpoint", () => {
         .expect(201);
 
       const responseBody: {
-        movementCategory: MovementCategoryEntity;
+        category: MovementCategoryEntity;
       } = response.body;
 
-      expect(responseBody.movementCategory).toEqual(
+      expect(responseBody.category).toEqual(
         expect.objectContaining(
           new MovementCategoryDto(
             newMovementCategoryData as MovementCategoryEntity,

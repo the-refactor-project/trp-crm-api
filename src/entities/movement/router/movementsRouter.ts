@@ -1,23 +1,27 @@
 import { Router } from "express";
-import MovementsController from "../controller/MovementsController.js";
-import MovementsRepository from "../repository/MovementsRepository.js";
 import Movement from "../model/Movement.js";
+import Repository from "../../../repository/Repository.js";
+import { MovementEntity, MovementEntityData } from "../MovementEntity.js";
+import Controller from "../../../controller/Controller.js";
 
 const movementsRouter = Router();
 
-const movementsRepository = new MovementsRepository(Movement);
-const movementsController = new MovementsController(movementsRepository);
+const movementsRepository = new Repository<MovementEntity, MovementEntityData>(
+  Movement,
+  "Movement",
+);
+const movementsController = new Controller<MovementEntity, MovementEntityData>(
+  movementsRepository,
+  {
+    singular: "Movement",
+    plural: "Movements",
+  },
+);
 
-movementsRouter.get("/", movementsController.getMovements);
-movementsRouter.get(
-  "/:movementCategoryId",
-  movementsController.getMovementById,
-);
-movementsRouter.post("/", movementsController.addMovement);
-movementsRouter.put("/", movementsController.updateMovementById);
-movementsRouter.delete(
-  "/:movementCategoryId",
-  movementsController.deleteMovementById,
-);
+movementsRouter.get("/", movementsController.get);
+movementsRouter.get("/:id", movementsController.getById);
+movementsRouter.post("/", movementsController.add);
+movementsRouter.put("/", movementsController.updateById);
+movementsRouter.delete("/:id", movementsController.deleteById);
 
 export default movementsRouter;
