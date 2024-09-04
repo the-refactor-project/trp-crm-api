@@ -28,18 +28,18 @@ describe("Given a GET /providers/:id endpoint", () => {
   });
 
   describe("When it receives a request with a non existing id", () => {
-    test("Then it should respond with 404 and a 'Movement not found", async () => {
-      const movement = createMockProviders(1)[0];
+    test("Then it should respond with 404 and a 'Provider not found", async () => {
+      const provider = createMockProviders(1)[0];
 
       const response = await request(app)
-        .get(`/movements/${movement._id}`)
+        .get(`/providers/${provider._id}`)
         .expect(404);
 
       const responseBody: {
         error: string;
       } = response.body;
 
-      expect(responseBody.error).toBe("Movement not found");
+      expect(responseBody.error).toBe("Provider not found");
     });
   });
 
@@ -48,7 +48,7 @@ describe("Given a GET /providers/:id endpoint", () => {
       const invalidId = "invalid-id";
 
       const response = await request(app)
-        .get(`/movements/${invalidId}`)
+        .get(`/providers/${invalidId}`)
         .expect(400);
 
       const responseBody: {
