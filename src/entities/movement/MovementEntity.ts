@@ -1,7 +1,9 @@
+import { Currency } from "../../types";
+
 export class MovementEntityData {
   type: "in" | "out";
   description: string;
-  currency: "EUR" | "USD";
+  currency: Currency;
   isCard: boolean;
   quantity: number;
   date: Date;

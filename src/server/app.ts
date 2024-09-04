@@ -8,6 +8,7 @@ import {
 } from "./errors/middlewares/errorMiddlewares.js";
 import movementsRouter from "../entities/movement/router/movementsRouter.js";
 import movementsCategoriesRouter from "../entities/movementCategory/router/movementCategoriesRouter.js";
+import providersRouter from "../entities/provider/router/providersRouter.js";
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.get("/", healthCheckController);
 
 app.use("/movements", movementsRouter);
 app.use("/movement-categories", movementsCategoriesRouter);
+app.use("/providers", providersRouter);
 
 app.use(notFoundError);
 app.use(generalError);
