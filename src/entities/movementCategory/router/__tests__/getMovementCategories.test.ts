@@ -23,11 +23,11 @@ describe("Given a GET /movement-categories endpoint", () => {
         .expect(200);
 
       const responseBody: {
-        movementCategories: MovementCategoryEntity[];
+        categories: MovementCategoryEntity[];
       } = response.body;
 
       movementCategories.forEach((movementCategory, index) => {
-        expect(responseBody.movementCategories[index]).toEqual(
+        expect(responseBody.categories[index]).toEqual(
           expect.objectContaining(new MovementCategoryDto(movementCategory)),
         );
       });

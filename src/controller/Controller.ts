@@ -18,7 +18,7 @@ class Controller<Entity extends { _id: string }, EntityData>
   get = async (_req: Request, res: Response): Promise<void> => {
     const items = await this.repository.get();
 
-    res.status(200).json({ [this.entityData.plural.toLowerCase()]: items });
+    res.status(200).json({ [this.normalize(this.entityData.plural)]: items });
   };
 
   getById = async (
@@ -31,7 +31,9 @@ class Controller<Entity extends { _id: string }, EntityData>
 
       const item = await this.repository.getById(id);
 
-      res.status(200).json({ [this.entityData.singular.toLowerCase()]: item });
+      res
+        .status(200)
+        .json({ [this.normalize(this.entityData.singular)]: item });
     } catch (error) {
       let serverError: ServerError;
 
@@ -61,7 +63,9 @@ class Controller<Entity extends { _id: string }, EntityData>
     try {
       const item = await this.repository.add(newItemData);
 
-      res.status(201).json({ [this.entityData.singular.toLowerCase()]: item });
+      res
+        .status(201)
+        .json({ [this.normalize(this.entityData.singular)]: item });
     } catch (error) {
       let serverError: ServerError;
 
@@ -93,9 +97,10 @@ class Controller<Entity extends { _id: string }, EntityData>
 
       const updatedItem = await this.repository.updateById(item);
 
-      res
-        .status(200)
-        .json({ [`updated${this.entityData.singular}`]: updatedItem });
+      res.status(200).json({
+        [`updated${this.normalize(this.entityData.singular, false)}`]:
+          updatedItem,
+      });
     } catch (error) {
       let serverError: ServerError;
 
@@ -144,6 +149,12 @@ class Controller<Entity extends { _id: string }, EntityData>
       next(serverError);
     }
   };
+
+  private normalize(text: string, toLowerCase = true): string {
+    const trimmedText = text.replaceAll(" ", "");
+
+    return toLowerCase ? trimmedText.toLowerCase() : trimmedText;
+  }
 }
 
 export default Controller;
