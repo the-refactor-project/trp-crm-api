@@ -10,6 +10,7 @@ import movementsRouter from "../entities/movement/router/movementsRouter.js";
 import movementsCategoriesRouter from "../entities/movementCategory/router/movementCategoriesRouter.js";
 import providersRouter from "../entities/provider/router/providersRouter.js";
 import leadsRouter from "../entities/lead/router/leadsRouter.js";
+import coursesRouter from "../entities/course/router/coursesRouter.js";
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use("/movements", movementsRouter);
 app.use("/movement-categories", movementsCategoriesRouter);
 app.use("/providers", providersRouter);
 app.use("/leads", leadsRouter);
+app.use("/courses", coursesRouter);
 
 app.use(notFoundError);
 app.use(generalError);
