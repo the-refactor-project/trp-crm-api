@@ -4,6 +4,7 @@ import {
   MovementCategoryEntity,
   MovementCategoryEntityData,
 } from "../MovementCategoryEntity";
+import { createMockItemDatas, createMockItems } from "../../../factories";
 
 const movementCategoriesFactory = Factory.define<MovementCategoryEntity>(
   () => ({
@@ -14,19 +15,13 @@ const movementCategoriesFactory = Factory.define<MovementCategoryEntity>(
 
 export const createMockMovementCategories = (
   number = 2,
-): MovementCategoryEntity[] => movementCategoriesFactory.buildList(number);
+): MovementCategoryEntity[] =>
+  createMockItems<MovementCategoryEntity>(movementCategoriesFactory, number);
 
 export const createMockMovementCategoryDatas = (
   number = 2,
 ): MovementCategoryEntityData[] =>
-  createMockMovementCategories(number).map<MovementCategoryEntityData>(
-    (movementCategory) => {
-      const newMovementCategoryData: MovementCategoryEntityData = {
-        ...movementCategory,
-      };
-
-      delete (newMovementCategoryData as Partial<MovementCategoryEntity>)._id;
-
-      return newMovementCategoryData;
-    },
+  createMockItemDatas<MovementCategoryEntity, MovementCategoryEntityData>(
+    movementCategoriesFactory,
+    number,
   );

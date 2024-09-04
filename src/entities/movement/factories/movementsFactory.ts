@@ -1,10 +1,12 @@
 import { Factory } from "fishery";
 import { faker } from "@faker-js/faker";
 import { MovementEntity, MovementEntityData } from "../MovementEntity";
+import { currencies } from "../../../types";
+import { createMockItemDatas, createMockItems } from "../../../factories";
 
 const movementsFactory = Factory.define<MovementEntity>(() => ({
   _id: faker.database.mongodbObjectId(),
-  currency: faker.helpers.arrayElement(["EUR", "USD"]),
+  currency: faker.helpers.arrayElement(currencies),
   description: faker.finance.transactionDescription(),
   quantity: Number(faker.finance.amount()),
   type: faker.helpers.arrayElement(["in", "out"]),
@@ -13,13 +15,10 @@ const movementsFactory = Factory.define<MovementEntity>(() => ({
 }));
 
 export const createMockMovements = (number = 2): MovementEntity[] =>
-  movementsFactory.buildList(number);
+  createMockItems<MovementEntity>(movementsFactory, number);
 
 export const createMockMovementDatas = (number = 2): MovementEntityData[] =>
-  createMockMovements(number).map<MovementEntityData>((movement) => {
-    const newMovementData: MovementEntityData = { ...movement };
-
-    delete (newMovementData as Partial<MovementEntity>)._id;
-
-    return newMovementData;
-  });
+  createMockItemDatas<MovementEntity, MovementEntityData>(
+    movementsFactory,
+    number,
+  );

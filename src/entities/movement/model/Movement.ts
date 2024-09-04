@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import { MovementEntity } from "../MovementEntity.js";
+import { currencies } from "../../../types.js";
 
 const movementSchema = new Schema<MovementEntity>({
   type: {
@@ -13,7 +14,7 @@ const movementSchema = new Schema<MovementEntity>({
   },
   currency: {
     type: String,
-    enum: ["EUR", "USD"],
+    enum: currencies,
     required: true,
   },
   quantity: {
