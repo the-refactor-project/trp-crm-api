@@ -8,6 +8,7 @@ const movementsFactory = Factory.define<MovementEntity>(() => ({
   description: faker.finance.transactionDescription(),
   quantity: Number(faker.finance.amount()),
   type: faker.helpers.arrayElement(["in", "out"]),
+  isCard: faker.datatype.boolean(),
   date: faker.date.recent(),
 }));
 

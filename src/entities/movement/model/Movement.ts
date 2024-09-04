@@ -20,6 +20,10 @@ const movementSchema = new Schema<MovementEntity>({
     type: Number,
     required: true,
   },
+  isCard: {
+    type: Boolean,
+    default: false,
+  },
   date: {
     type: Date,
     required: true,

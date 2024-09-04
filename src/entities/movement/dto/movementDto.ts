@@ -5,6 +5,7 @@ class MovementDto {
   description: string;
   currency: string;
   quantity: number;
+  isCard: boolean;
   date: string;
 
   constructor(movement: MovementEntity) {
@@ -12,6 +13,7 @@ class MovementDto {
     this.description = movement.description;
     this.currency = movement.currency;
     this.quantity = movement.quantity;
+    this.isCard = movement.isCard;
     this.date = movement.date.toISOString();
   }
 }
