@@ -1,7 +1,6 @@
 import request from "supertest";
 import app from "../../../../server/app";
 import { createMockMovementCategories } from "../../factories/movementCategoriesFactory";
-import MovementCategoryDto from "../../dto/movementCategoryDto";
 import MovementCategory from "../../model/MovementCategory";
 import { MovementCategoryEntity } from "../../MovementCategoryEntity";
 
@@ -31,9 +30,7 @@ describe("Given a PUT /movement-categories/:id endpoint", () => {
       };
 
       expect(responseBody.updatedCategory).toEqual(
-        expect.objectContaining(
-          new MovementCategoryDto(updatedMovementCategory),
-        ),
+        expect.objectContaining(updatedMovementCategory),
       );
     });
   });
