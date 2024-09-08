@@ -32,7 +32,7 @@ const leadSchema = new Schema<LeadEntity>({
   channel: String,
   origin: String,
   referralOf: String,
-  enterDate: {
+  entryDate: {
     type: Date,
     default: new Date(),
   },

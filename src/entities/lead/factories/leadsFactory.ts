@@ -22,7 +22,7 @@ const leadsFactory = Factory.define<LeadEntity>(() => ({
     country: faker.location.country(),
     zip: faker.location.zipCode(),
   },
-  enterDate: faker.date.recent(),
+  entryDate: faker.date.recent(),
   askedFor: faker.lorem.word(),
   channel: faker.lorem.word(),
   email: faker.internet.email(),

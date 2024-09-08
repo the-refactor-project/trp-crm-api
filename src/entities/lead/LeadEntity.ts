@@ -10,7 +10,7 @@ export class LeadEntityData {
   channel?: string;
   origin?: string;
   referralOf?: string;
-  enterDate: Date;
+  entryDate: Date;
   askedFor?: string;
   formComments?: string;
 }

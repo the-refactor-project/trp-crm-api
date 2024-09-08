@@ -11,7 +11,7 @@ class LeadDto {
   channel?: string;
   origin?: string;
   referralOf?: string;
-  enterDate: string;
+  entryDate: string;
   askedFor?: string;
   formComments?: string;
 
@@ -27,7 +27,7 @@ class LeadDto {
     this.formComments = lead.formComments;
     this.origin = lead.origin;
     this.referralOf = lead.referralOf;
-    this.enterDate = lead.enterDate.toISOString();
+    this.entryDate = lead.entryDate.toISOString();
   }
 }
 
