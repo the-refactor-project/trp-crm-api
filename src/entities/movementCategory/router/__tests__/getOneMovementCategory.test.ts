@@ -1,7 +1,6 @@
 import request from "supertest";
 import app from "../../../../server/app";
 import { createMockMovementCategories } from "../../factories/movementCategoriesFactory";
-import MovementCategoryDto from "../../dto/movementCategoryDto";
 import MovementCategory from "../../model/MovementCategory";
 import { MovementCategoryEntity } from "../../MovementCategoryEntity";
 
@@ -9,9 +8,9 @@ afterEach(async () => {
   await MovementCategory.deleteMany();
 });
 
-describe("Given a GET /movement-categories/:movementCategoryId endpoint", () => {
+describe("Given a GET /movement-categories/:id endpoint", () => {
   describe("When it receives a request with an existing id", () => {
-    test("Then it should respond with 200 and the movement", async () => {
+    test("Then it should respond with 200 and the category", async () => {
       const movementCategory = createMockMovementCategories(1)[0];
 
       await MovementCategory.create(movementCategory);
@@ -25,7 +24,7 @@ describe("Given a GET /movement-categories/:movementCategoryId endpoint", () => 
       };
 
       expect(responseBody.category).toEqual(
-        expect.objectContaining(new MovementCategoryDto(movementCategory)),
+        expect.objectContaining(movementCategory),
       );
     });
   });

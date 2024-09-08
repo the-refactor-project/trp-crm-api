@@ -1,7 +1,6 @@
 import request from "supertest";
 import app from "../../../../server/app";
 import { createMockMovementCategoryDatas } from "../../factories/movementCategoriesFactory";
-import MovementCategoryDto from "../../dto/movementCategoryDto";
 import {
   MovementCategoryEntity,
   MovementCategoryEntityData,
@@ -22,11 +21,7 @@ describe("Given a POST /movement-categories endpoint", () => {
       } = response.body;
 
       expect(responseBody.category).toEqual(
-        expect.objectContaining(
-          new MovementCategoryDto(
-            newMovementCategoryData as MovementCategoryEntity,
-          ),
-        ),
+        expect.objectContaining(newMovementCategoryData),
       );
     });
   });

@@ -3,7 +3,6 @@ import app from "../../../../server/app";
 import MovementCategory from "../../model/MovementCategory";
 import { createMockMovementCategories } from "../../factories/movementCategoriesFactory";
 import { MovementCategoryEntity } from "../../MovementCategoryEntity";
-import MovementCategoryDto from "../../dto/movementCategoryDto";
 
 afterEach(async () => {
   await MovementCategory.deleteMany();
@@ -28,7 +27,7 @@ describe("Given a GET /movement-categories endpoint", () => {
 
       movementCategories.forEach((movementCategory, index) => {
         expect(responseBody.categories[index]).toEqual(
-          expect.objectContaining(new MovementCategoryDto(movementCategory)),
+          expect.objectContaining(movementCategory),
         );
       });
     });

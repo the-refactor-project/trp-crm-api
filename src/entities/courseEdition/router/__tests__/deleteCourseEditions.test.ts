@@ -1,38 +1,38 @@
 import request from "supertest";
 import app from "../../../../server/app";
-import { createMockMovementCategories } from "../../factories/movementCategoriesFactory";
-import MovementCategory from "../../model/MovementCategory";
+import { createMockCourseEditions } from "../../factories/courseEditionsFactory";
+import CourseEdition from "../../model/CourseEdition";
 
 afterEach(async () => {
-  await MovementCategory.deleteMany();
+  await CourseEdition.deleteMany();
 });
 
-describe("Given a DELETE /movement-categories/:id endpoint", () => {
+describe("Given a DELETE /course-editions/:id endpoint", () => {
   describe("When it receives a request with an existing id", () => {
     test("Then it should respond with 200", async () => {
-      const movementCategory = createMockMovementCategories(1)[0];
+      const courseEditions = createMockCourseEditions(1)[0];
 
-      await MovementCategory.create(movementCategory);
+      await CourseEdition.create(courseEditions);
 
       await request(app)
-        .delete(`/movement-categories/${movementCategory._id}`)
+        .delete(`/course-editions/${courseEditions._id}`)
         .expect(200);
     });
   });
 
   describe("When it receives a request with a non existing id", () => {
-    test("Then it should respond with 404 and a 'Category not found", async () => {
-      const movementCategory = createMockMovementCategories(1)[0];
+    test("Then it should respond with 404 and a 'Edition not found", async () => {
+      const courseEdition = createMockCourseEditions(1)[0];
 
       const response = await request(app)
-        .delete(`/movement-categories/${movementCategory._id}`)
+        .delete(`/course-editions/${courseEdition._id}`)
         .expect(404);
 
       const responseBody: {
         error: string;
       } = response.body;
 
-      expect(responseBody.error).toBe("Category not found");
+      expect(responseBody.error).toBe("Edition not found");
     });
   });
 
@@ -41,7 +41,7 @@ describe("Given a DELETE /movement-categories/:id endpoint", () => {
       const invalidId = "invalid-id";
 
       const response = await request(app)
-        .delete(`/movement-categories/${invalidId}`)
+        .delete(`/course-editions/${invalidId}`)
         .expect(400);
 
       const responseBody: {
