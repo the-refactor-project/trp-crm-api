@@ -18,6 +18,7 @@ const providersFactory = Factory.define<ProviderEntity>(() => ({
   nif: generateSpanishNif(),
   vat: "ES" + generateSpanishNif(),
   currency: faker.helpers.arrayElement(currencies),
+  phoneNumber: faker.phone.number(),
   address: {
     city: faker.location.city(),
     locality: faker.location.county(),

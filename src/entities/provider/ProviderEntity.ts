@@ -4,10 +4,12 @@ import { AddressEntity } from "../address/AddressEntity";
 export class ProviderEntityData {
   name: string;
   commercialName?: string;
+  email?: string;
   nif: string;
   vat?: string;
   address: AddressEntity;
-  currency: Currency;
+  currency?: Currency;
+  phoneNumber: string;
 }
 
 export class ProviderEntity extends ProviderEntityData {
