@@ -8,6 +8,7 @@ const providerSchema = new Schema<ProviderEntity>({
     required: true,
   },
   commercialName: String,
+  email: String,
   nif: {
     type: String,
     required: true,
@@ -21,8 +22,9 @@ const providerSchema = new Schema<ProviderEntity>({
   currency: {
     type: String,
     enum: currencies,
-    required: true,
+    default: "EUR",
   },
+  phoneNumber: String,
   address: {
     address: String,
     city: String,
