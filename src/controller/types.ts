@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from "express";
+import { Types } from "mongoose";
 
 export interface ControllerStructure<
-  Entity extends { _id: string },
+  Entity extends { _id: Types.ObjectId },
   EntityData,
 > {
   get: (req: Request, res: Response) => Promise<void>;

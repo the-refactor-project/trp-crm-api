@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { Currency } from "../../types";
 
 export class MovementEntityData {
@@ -10,5 +11,5 @@ export class MovementEntityData {
 }
 
 export class MovementEntity extends MovementEntityData {
-  _id: string;
+  _id: Types.ObjectId;
 }

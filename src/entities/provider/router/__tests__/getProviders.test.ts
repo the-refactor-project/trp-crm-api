@@ -25,7 +25,10 @@ describe("Given a GET /providers endpoint", () => {
 
       providers.forEach((provider, index) => {
         expect(responseBody.providers[index]).toEqual(
-          expect.objectContaining(provider),
+          expect.objectContaining({
+            name: provider.name,
+            nif: provider.nif,
+          }),
         );
       });
     });

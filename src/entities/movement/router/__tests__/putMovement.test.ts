@@ -4,6 +4,7 @@ import { createMockMovements } from "../../factories/movementsFactory";
 import Movement from "../../model/Movement";
 import { MovementEntity } from "../../MovementEntity";
 import MovementDto from "../../dto/movementDto";
+import { Types } from "mongoose";
 
 afterEach(async () => {
   await Movement.deleteMany();
@@ -57,7 +58,7 @@ describe("Given a PUT /movements/:movementId endpoint", () => {
     test("Then it should respond with 400 and a 'Invalid id' error", async () => {
       const movement = createMockMovements(1)[0];
 
-      movement._id = "invalid-id";
+      movement._id = "invalid-id" as unknown as Types.ObjectId;
 
       const response = await request(app)
         .put("/movements")

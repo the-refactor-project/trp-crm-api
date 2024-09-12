@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { Error } from "mongoose";
+import { Error, Types } from "mongoose";
 import { ControllerStructure } from "./types";
 import { RepositoryStructure } from "../repository/types";
 import ServerError from "../server/errors/ServerError/ServerError.js";
 
-class Controller<Entity extends { _id: string }, EntityData>
+class Controller<Entity extends { _id: Types.ObjectId }, EntityData>
   implements ControllerStructure<Entity, EntityData>
 {
   constructor(

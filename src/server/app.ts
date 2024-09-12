@@ -12,6 +12,7 @@ import providersRouter from "../entities/provider/router/providersRouter.js";
 import leadsRouter from "../entities/lead/router/leadsRouter.js";
 import coursesRouter from "../entities/course/router/coursesRouter.js";
 import courseEditionsRouter from "../entities/courseEdition/router/courseEditionsRouter.js";
+import expensesRouter from "../entities/expense/router/expensesRouter.js";
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.get("/", healthCheckController);
 
 app.use("/movements", movementsRouter);
 app.use("/movement-categories", movementsCategoriesRouter);
+app.use("/expenses", expensesRouter);
 app.use("/providers", providersRouter);
 app.use("/leads", leadsRouter);
 app.use("/courses", coursesRouter);

@@ -27,7 +27,7 @@ describe("Given a GET /movement-categories endpoint", () => {
 
       movementCategories.forEach((movementCategory, index) => {
         expect(responseBody.categories[index]).toEqual(
-          expect.objectContaining(movementCategory),
+          expect.objectContaining({ name: movementCategory.name }),
         );
       });
     });

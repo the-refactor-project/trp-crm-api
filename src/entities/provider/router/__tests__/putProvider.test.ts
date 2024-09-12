@@ -3,6 +3,7 @@ import app from "../../../../server/app";
 import { createMockProviders } from "../../factories/providersFactory";
 import Provider from "../../model/Provider";
 import { ProviderEntity } from "../../ProviderEntity";
+import { Types } from "mongoose";
 
 afterEach(async () => {
   await Provider.deleteMany();
@@ -30,7 +31,10 @@ describe("Given a PUT /providers/:id endpoint", () => {
       };
 
       expect(responseBody.updatedProvider).toEqual(
-        expect.objectContaining(updatedProvider),
+        expect.objectContaining({
+          name: updatedProvider.name,
+          nif: updatedProvider.nif,
+        }),
       );
     });
   });
@@ -56,7 +60,7 @@ describe("Given a PUT /providers/:id endpoint", () => {
     test("Then it should respond with 400 and a 'Invalid id' error", async () => {
       const provider = createMockProviders(1)[0];
 
-      provider._id = "invalid-id";
+      provider._id = "invalid-id" as unknown as Types.ObjectId;
 
       const response = await request(app)
         .put("/providers")

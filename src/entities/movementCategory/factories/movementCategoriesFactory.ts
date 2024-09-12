@@ -5,10 +5,11 @@ import {
   MovementCategoryEntityData,
 } from "../MovementCategoryEntity";
 import { createMockItemDatas, createMockItems } from "../../../factories";
+import { Types } from "mongoose";
 
 const movementCategoriesFactory = Factory.define<MovementCategoryEntity>(
   () => ({
-    _id: faker.database.mongodbObjectId(),
+    _id: new Types.ObjectId(),
     name: faker.lorem.words(2),
   }),
 );

@@ -1,5 +1,7 @@
+import { Types } from "mongoose";
+
 export interface RepositoryStructure<
-  Entity extends { _id: string },
+  Entity extends { _id: Types.ObjectId },
   EntityData,
 > {
   get: () => Promise<Entity[]>;

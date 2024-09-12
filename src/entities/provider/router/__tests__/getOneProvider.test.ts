@@ -23,7 +23,12 @@ describe("Given a GET /providers/:id endpoint", () => {
         provider: ProviderEntity;
       };
 
-      expect(responseBody.provider).toEqual(expect.objectContaining(provider));
+      expect(responseBody.provider).toEqual(
+        expect.objectContaining({
+          name: provider.name,
+          nif: provider.nif,
+        }),
+      );
     });
   });
 
