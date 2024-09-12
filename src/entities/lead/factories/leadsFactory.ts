@@ -2,6 +2,7 @@ import { Factory } from "fishery";
 import { faker } from "@faker-js/faker";
 import { LeadEntity, LeadEntityData } from "../LeadEntity";
 import { createMockItemDatas, createMockItems } from "../../../factories";
+import { Types } from "mongoose";
 
 const generateSpanishNif = (): string => {
   const letters = "TRWAGMYFPDXBNJZSQVHLCKE";
@@ -11,7 +12,7 @@ const generateSpanishNif = (): string => {
 };
 
 const leadsFactory = Factory.define<LeadEntity>(() => ({
-  _id: faker.database.mongodbObjectId(),
+  _id: new Types.ObjectId(),
   name: faker.person.firstName(),
   lastName: faker.person.lastName(),
   nif: generateSpanishNif(),

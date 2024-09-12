@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { Currency } from "../../types";
 import { AddressEntity } from "../address/AddressEntity";
 
@@ -13,5 +14,5 @@ export class ProviderEntityData {
 }
 
 export class ProviderEntity extends ProviderEntityData {
-  _id: string;
+  _id: Types.ObjectId;
 }

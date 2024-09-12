@@ -4,6 +4,7 @@ import { createMockCourseEditions } from "../../factories/courseEditionsFactory"
 import CourseEditionDto from "../../dto/courseEditionDto";
 import CourseEdition from "../../model/CourseEdition";
 import { CourseEditionEntity } from "../../CourseEditionEntity";
+import { Types } from "mongoose";
 
 afterEach(async () => {
   await CourseEdition.deleteMany();
@@ -57,7 +58,7 @@ describe("Given a PUT /course-editions/:id endpoint", () => {
     test("Then it should respond with 400 and a 'Invalid id' error", async () => {
       const courseEdition = createMockCourseEditions(1)[0];
 
-      courseEdition._id = "invalid-id";
+      courseEdition._id = "invalid-id" as unknown as Types.ObjectId;
 
       const response = await request(app)
         .put("/course-editions")

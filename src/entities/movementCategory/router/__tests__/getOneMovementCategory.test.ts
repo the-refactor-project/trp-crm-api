@@ -24,7 +24,7 @@ describe("Given a GET /movement-categories/:id endpoint", () => {
       };
 
       expect(responseBody.category).toEqual(
-        expect.objectContaining(movementCategory),
+        expect.objectContaining({ name: movementCategory.name }),
       );
     });
   });

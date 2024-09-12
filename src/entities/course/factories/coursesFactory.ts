@@ -2,9 +2,10 @@ import { Factory } from "fishery";
 import { faker } from "@faker-js/faker";
 import { CourseEntity, CourseEntityData } from "../CourseEntity";
 import { createMockItemDatas, createMockItems } from "../../../factories";
+import { Types } from "mongoose";
 
 const coursesFactory = Factory.define<CourseEntity>(() => ({
-  _id: faker.database.mongodbObjectId(),
+  _id: new Types.ObjectId(),
   name: faker.lorem.slug(),
 }));
 

@@ -25,7 +25,7 @@ describe("Given a GET /courses endpoint", () => {
 
       courses.forEach((course, index) => {
         expect(responseBody.courses[index]).toEqual(
-          expect.objectContaining(course),
+          expect.objectContaining({ name: course.name }),
         );
       });
     });

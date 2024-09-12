@@ -1,5 +1,6 @@
 import { Factory } from "fishery";
 import { faker } from "@faker-js/faker";
+import { Types } from "mongoose";
 import {
   CourseEditionEntity,
   CourseEditionEntityData,
@@ -7,7 +8,7 @@ import {
 import { createMockItemDatas, createMockItems } from "../../../factories";
 
 const courseEditionsFactory = Factory.define<CourseEditionEntity>(() => ({
-  _id: faker.database.mongodbObjectId(),
+  _id: new Types.ObjectId(),
   name: faker.lorem.words(1),
   date: faker.date.recent(),
 }));

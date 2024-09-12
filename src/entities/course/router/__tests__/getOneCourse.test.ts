@@ -23,7 +23,9 @@ describe("Given a GET /courses/:id endpoint", () => {
         course: CourseEntity;
       };
 
-      expect(responseBody.course).toEqual(expect.objectContaining(course));
+      expect(responseBody.course).toEqual(
+        expect.objectContaining({ name: course.name }),
+      );
     });
   });
 

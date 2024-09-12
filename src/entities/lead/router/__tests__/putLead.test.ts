@@ -4,6 +4,7 @@ import { createMockLeads } from "../../factories/leadsFactory";
 import Lead from "../../model/Lead";
 import { LeadEntity } from "../../LeadEntity";
 import LeadDto from "../../dto/leadDto";
+import { Types } from "mongoose";
 
 afterEach(async () => {
   await Lead.deleteMany();
@@ -54,7 +55,7 @@ describe("Given a PUT /leads/:id endpoint", () => {
     test("Then it should respond with 400 and a 'Invalid id' error", async () => {
       const lead = createMockLeads(1)[0];
 
-      lead._id = "invalid-id";
+      lead._id = "invalid-id" as unknown as Types.ObjectId;
 
       const response = await request(app).put("/leads").send(lead).expect(400);
 

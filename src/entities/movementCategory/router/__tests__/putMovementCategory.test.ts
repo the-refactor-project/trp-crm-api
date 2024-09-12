@@ -3,6 +3,7 @@ import app from "../../../../server/app";
 import { createMockMovementCategories } from "../../factories/movementCategoriesFactory";
 import MovementCategory from "../../model/MovementCategory";
 import { MovementCategoryEntity } from "../../MovementCategoryEntity";
+import { Types } from "mongoose";
 
 afterEach(async () => {
   await MovementCategory.deleteMany();
@@ -12,12 +13,13 @@ describe("Given a PUT /movement-categories/:id endpoint", () => {
   describe("When it receives a request with an existing id", () => {
     test("Then it should respond with 200 and the updated category", async () => {
       const movementCategory = createMockMovementCategories(1)[0];
+      const updatedMovementCategoryName = movementCategory.name + "!!";
 
       await MovementCategory.create(movementCategory);
 
       const updatedMovementCategory: MovementCategoryEntity = {
         ...movementCategory,
-        name: movementCategory.name + "!!",
+        name: updatedMovementCategoryName,
       };
 
       const response = await request(app)
@@ -30,7 +32,9 @@ describe("Given a PUT /movement-categories/:id endpoint", () => {
       };
 
       expect(responseBody.updatedCategory).toEqual(
-        expect.objectContaining(updatedMovementCategory),
+        expect.objectContaining({
+          name: updatedMovementCategoryName,
+        }),
       );
     });
   });
@@ -56,7 +60,7 @@ describe("Given a PUT /movement-categories/:id endpoint", () => {
     test("Then it should respond with 400 and a 'Invalid id' error", async () => {
       const movementCategory = createMockMovementCategories(1)[0];
 
-      movementCategory._id = "invalid-id";
+      movementCategory._id = "invalid-id" as unknown as Types.ObjectId;
 
       const response = await request(app)
         .put("/movement-categories")

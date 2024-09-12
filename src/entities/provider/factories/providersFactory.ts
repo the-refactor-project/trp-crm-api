@@ -3,6 +3,7 @@ import { faker } from "@faker-js/faker";
 import { currencies } from "../../../types";
 import { ProviderEntity, ProviderEntityData } from "../ProviderEntity";
 import { createMockItemDatas, createMockItems } from "../../../factories";
+import { Types } from "mongoose";
 
 const generateSpanishNif = (): string => {
   const letters = "TRWAGMYFPDXBNJZSQVHLCKE";
@@ -12,7 +13,7 @@ const generateSpanishNif = (): string => {
 };
 
 const providersFactory = Factory.define<ProviderEntity>(() => ({
-  _id: faker.database.mongodbObjectId(),
+  _id: new Types.ObjectId(),
   name: faker.company.name(),
   commercialName: faker.company.name(),
   nif: generateSpanishNif(),

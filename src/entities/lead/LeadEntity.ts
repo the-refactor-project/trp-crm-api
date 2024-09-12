@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { AddressEntity } from "../address/AddressEntity";
 
 export class LeadEntityData {
@@ -16,5 +17,5 @@ export class LeadEntityData {
 }
 
 export class LeadEntity extends LeadEntityData {
-  _id: string;
+  _id: Types.ObjectId;
 }

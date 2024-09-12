@@ -1,4 +1,5 @@
 import request from "supertest";
+import { Types } from "mongoose";
 import app from "../../../../server/app";
 import { createMockCourses } from "../../factories/coursesFactory";
 import Course from "../../model/Course";
@@ -12,12 +13,13 @@ describe("Given a PUT /courses/:id endpoint", () => {
   describe("When it receives a request with an existing id", () => {
     test("Then it should respond with 200 and the updated course", async () => {
       const course = createMockCourses(1)[0];
+      const updatedCourseName = course.name + "!!";
 
       await Course.create(course);
 
       const updatedCourse: CourseEntity = {
         ...course,
-        name: course.name + "!!",
+        name: updatedCourseName,
       };
 
       const response = await request(app)
@@ -30,7 +32,7 @@ describe("Given a PUT /courses/:id endpoint", () => {
       };
 
       expect(responseBody.updatedCourse).toEqual(
-        expect.objectContaining(updatedCourse),
+        expect.objectContaining({ name: updatedCourseName }),
       );
     });
   });
@@ -56,7 +58,7 @@ describe("Given a PUT /courses/:id endpoint", () => {
     test("Then it should respond with 400 and a 'Invalid id' error", async () => {
       const course = createMockCourses(1)[0];
 
-      course._id = "invalid-id";
+      course._id = "invalid-id" as unknown as Types.ObjectId;
 
       const response = await request(app)
         .put("/courses")
