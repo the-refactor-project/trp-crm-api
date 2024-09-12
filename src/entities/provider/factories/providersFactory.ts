@@ -1,23 +1,17 @@
 import { Factory } from "fishery";
 import { faker } from "@faker-js/faker";
-import { currencies } from "../../../types";
+import { currencies } from "../../../const.js";
 import { ProviderEntity, ProviderEntityData } from "../ProviderEntity";
 import { createMockItemDatas, createMockItems } from "../../../factories";
 import { Types } from "mongoose";
-
-const generateSpanishNif = (): string => {
-  const letters = "TRWAGMYFPDXBNJZSQVHLCKE";
-  const randomNumber = faker.number.int({ min: 10000000, max: 99999999 });
-  const letter = letters[randomNumber % 23];
-  return `${randomNumber}${letter}`;
-};
+import Nif from "../../../Nif/Nif.js";
 
 const providersFactory = Factory.define<ProviderEntity>(() => ({
   _id: new Types.ObjectId(),
   name: faker.company.name(),
   commercialName: faker.company.name(),
-  nif: generateSpanishNif(),
-  vat: "ES" + generateSpanishNif(),
+  nif: new Nif().getNumber(),
+  vat: "ES" + new Nif().getNumber(),
   currency: faker.helpers.arrayElement(currencies),
   phoneNumber: faker.phone.number(),
   address: {

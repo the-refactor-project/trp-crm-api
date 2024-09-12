@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 import { MovementEntity } from "../MovementEntity.js";
-import { currencies } from "../../../types.js";
+import { currencies } from "../../../const.js";
 
 const movementSchema = new Schema<MovementEntity>({
   type: {

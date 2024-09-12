@@ -1,7 +1,7 @@
 import { Factory } from "fishery";
 import { faker } from "@faker-js/faker";
 import { MovementEntity, MovementEntityData } from "../MovementEntity";
-import { currencies } from "../../../types";
+import { currencies } from "../../../const.js";
 import { createMockItemDatas, createMockItems } from "../../../factories";
 import { Types } from "mongoose";
 

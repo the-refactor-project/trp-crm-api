@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 import { ProviderEntity } from "../ProviderEntity.js";
-import { currencies } from "../../../types.js";
+import { currencies } from "../../../const.js";
 
 const providerSchema = new Schema<ProviderEntity>({
   name: {

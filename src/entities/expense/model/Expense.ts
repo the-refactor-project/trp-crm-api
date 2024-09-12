@@ -1,7 +1,6 @@
-import { model, Schema } from "mongoose";
-import { currencies } from "../../../types";
-import { ExpenseEntity } from "../ExpenseEntity";
-import mongoose from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
+import { currencies } from "../../../const.js";
+import { ExpenseEntity } from "../ExpenseEntity.js";
 
 const expenseSchema = new Schema<ExpenseEntity>({
   description: {
