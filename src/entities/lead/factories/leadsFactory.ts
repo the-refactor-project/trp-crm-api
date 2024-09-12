@@ -3,19 +3,13 @@ import { faker } from "@faker-js/faker";
 import { LeadEntity, LeadEntityData } from "../LeadEntity";
 import { createMockItemDatas, createMockItems } from "../../../factories";
 import { Types } from "mongoose";
-
-const generateSpanishNif = (): string => {
-  const letters = "TRWAGMYFPDXBNJZSQVHLCKE";
-  const randomNumber = faker.number.int({ min: 10000000, max: 99999999 });
-  const letter = letters[randomNumber % 23];
-  return `${randomNumber}${letter}`;
-};
+import Nif from "../../../Nif/Nif";
 
 const leadsFactory = Factory.define<LeadEntity>(() => ({
   _id: new Types.ObjectId(),
   name: faker.person.firstName(),
   lastName: faker.person.lastName(),
-  nif: generateSpanishNif(),
+  nif: new Nif().getNumber(),
   address: {
     city: faker.location.city(),
     locality: faker.location.county(),

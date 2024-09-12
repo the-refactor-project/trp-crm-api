@@ -1,2 +1,3 @@
-export const currencies = ["EUR", "USD"] as const;
+import { currencies } from "./const";
+
 export type Currency = (typeof currencies)[number];

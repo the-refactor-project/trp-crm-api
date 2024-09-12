@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker";
 import { Types } from "mongoose";
 import { createMockItemDatas, createMockItems } from "../../../factories";
 import { ExpenseEntity, ExpenseEntityData } from "../ExpenseEntity";
-import { currencies } from "../../../types";
+import { currencies } from "../../../const.js";
 
 const expensesFactory = Factory.define<ExpenseEntity>(() => ({
   _id: new Types.ObjectId(),
