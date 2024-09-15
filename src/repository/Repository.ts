@@ -1,7 +1,8 @@
-import { Model, Types } from "mongoose";
+import { Model } from "mongoose";
 import { RepositoryStructure } from "./types";
+import { WithMongoId } from "../types";
 
-class Repository<Entity extends { _id: Types.ObjectId }, EntityData>
+class Repository<Entity extends WithMongoId, EntityData>
   implements RepositoryStructure<Entity, EntityData>
 {
   constructor(

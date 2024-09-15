@@ -1,9 +1,6 @@
-import { Types } from "mongoose";
+import { WithMongoId } from "../types";
 
-export interface RepositoryStructure<
-  Entity extends { _id: Types.ObjectId },
-  EntityData,
-> {
+export interface RepositoryStructure<Entity extends WithMongoId, EntityData> {
   get: () => Promise<Entity[]>;
   getByStart: (
     startField: keyof Entity,

@@ -3,6 +3,7 @@ import app from "../../../../server/app";
 import Provider from "../../model/Provider";
 import { ProviderEntity } from "../../ProviderEntity";
 import { mockProvidersFactory } from "../../factories/providersFactory";
+import { minDebounceAllowedLength } from "../../../../const";
 
 afterEach(async () => {
   await Provider.deleteMany();
@@ -52,6 +53,22 @@ describe("Given a GET /providers/start endpoint", () => {
       } = response.body;
 
       expect(responseBody.providers).toHaveLength(0);
+    });
+  });
+
+  describe("When it receives a request with a start 'te'", () => {
+    test("Then it should respond with 400 and an error", async () => {
+      const response = await request(app)
+        .get(`/providers/start/te`)
+        .expect(400);
+
+      const responseBody: {
+        error: string;
+      } = response.body;
+
+      expect(responseBody.error).toBe(
+        `Search string must be ${minDebounceAllowedLength} chars long at least`,
+      );
     });
   });
 });
