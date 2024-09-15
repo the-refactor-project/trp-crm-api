@@ -15,7 +15,7 @@ const movementsFactory = Factory.define<MovementEntity>(() => ({
   date: faker.date.recent(),
 }));
 
-export const mockMovementFactory = new MockItemsFactory<
+export const mockMovementsFactory = new MockItemsFactory<
   MovementEntity,
   MovementEntityData
 >(movementsFactory);

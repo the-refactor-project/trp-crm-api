@@ -9,10 +9,10 @@ afterEach(async () => {
   await Provider.deleteMany();
 });
 
-describe("Given a GET /providers/start endpoint", () => {
-  const start = "Test";
-  const providerName = `${start} provider`;
-  const providerCommercialName = `Commercial ${start}`;
+describe("Given a GET /providers/search endpoint", () => {
+  const search = "Test";
+  const providerName = `${search} provider`;
+  const providerCommercialName = `Commercial ${search}`;
   const provider1 = mockProvidersFactory.createOne({
     name: providerName,
     commercialName: providerCommercialName,
@@ -22,13 +22,13 @@ describe("Given a GET /providers/start endpoint", () => {
     commercialName: "Commercial another provider",
   });
 
-  describe("When it receives a request with a start 'test'", () => {
+  describe("When it receives a request with a search 'test'", () => {
     test("Then it should respond with 200 and the provider 'Test provider'", async () => {
       await Provider.create(provider1);
       await Provider.create(provider2);
 
       const response = await request(app)
-        .get(`/providers/start/${start}`)
+        .get(`/providers/search/${search}`)
         .expect(200);
 
       const responseBody = response.body as {
@@ -47,10 +47,10 @@ describe("Given a GET /providers/start endpoint", () => {
     });
   });
 
-  describe("When it receives a request with a non matching start 'inexistent'", () => {
+  describe("When it receives a request with a non matching search 'inexistent'", () => {
     test("Then it should respond with 200 and no providers", async () => {
       const response = await request(app)
-        .get(`/providers/start/inexistent`)
+        .get(`/providers/search/inexistent`)
         .expect(200);
 
       const responseBody: {
@@ -61,10 +61,10 @@ describe("Given a GET /providers/start endpoint", () => {
     });
   });
 
-  describe("When it receives a request with a start 'te'", () => {
+  describe("When it receives a request with a search 'te'", () => {
     test("Then it should respond with 400 and an error", async () => {
       const response = await request(app)
-        .get(`/providers/start/te`)
+        .get(`/providers/search/te`)
         .expect(400);
 
       const responseBody: {

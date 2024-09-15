@@ -1,24 +1,18 @@
 import { Router } from "express";
 import Movement from "../model/Movement.js";
-import Repository from "../../../repository/Repository.js";
-import { MovementEntity, MovementEntityData } from "../MovementEntity.js";
-import Controller from "../../../controller/Controller.js";
+import MovementsRepository from "../repository/MovementsRepository.js";
+import MovementsController from "../controller/MovementsController.js";
 
 const movementsRouter = Router();
 
-const movementsRepository = new Repository<MovementEntity, MovementEntityData>(
-  Movement,
-  "Movement",
-);
-const movementsController = new Controller<MovementEntity, MovementEntityData>(
-  movementsRepository,
-  {
-    singular: "Movement",
-    plural: "Movements",
-  },
-);
+const movementsRepository = new MovementsRepository(Movement, "Movement");
+const movementsController = new MovementsController(movementsRepository, {
+  singular: "Movement",
+  plural: "Movements",
+});
 
 movementsRouter.get("/", movementsController.get);
+movementsRouter.get("/search/:search", movementsController.search);
 movementsRouter.get("/:id", movementsController.getById);
 movementsRouter.post("/", movementsController.add);
 movementsRouter.put("/", movementsController.updateById);

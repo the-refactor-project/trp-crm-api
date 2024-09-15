@@ -4,7 +4,7 @@ import Movement from "../../model/Movement";
 import { MovementEntity } from "../../MovementEntity";
 import MovementDto from "../../dto/movementDto";
 import { Types } from "mongoose";
-import { mockMovementFactory } from "../../factories/movementsFactory";
+import { mockMovementsFactory } from "../../factories/movementsFactory";
 
 afterEach(async () => {
   await Movement.deleteMany();
@@ -13,7 +13,7 @@ afterEach(async () => {
 describe("Given a PUT /movements/:movementId endpoint", () => {
   describe("When it receives a request with an existing id", () => {
     test("Then it should respond with 200 and the updated movement", async () => {
-      const movement = mockMovementFactory.createOne();
+      const movement = mockMovementsFactory.createOne();
 
       await Movement.create(movement);
 
@@ -39,7 +39,7 @@ describe("Given a PUT /movements/:movementId endpoint", () => {
 
   describe("When it receives a request with a non existing id", () => {
     test("Then it should respond with 404 and a 'Movement not found", async () => {
-      const movement = mockMovementFactory.createOne();
+      const movement = mockMovementsFactory.createOne();
 
       const response = await request(app)
         .put("/movements")
@@ -56,7 +56,7 @@ describe("Given a PUT /movements/:movementId endpoint", () => {
 
   describe("When it receives a request with an invalid id", () => {
     test("Then it should respond with 400 and a 'Invalid id' error", async () => {
-      const movement = mockMovementFactory.createOne();
+      const movement = mockMovementsFactory.createOne();
 
       movement._id = "invalid-id" as unknown as Types.ObjectId;
 

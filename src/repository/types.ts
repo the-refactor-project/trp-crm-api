@@ -7,3 +7,7 @@ export interface RepositoryStructure<Entity extends WithMongoId, EntityData> {
   updateById: (entity: Entity) => Promise<Entity>;
   deleteById: (id: Entity["_id"]) => Promise<void>;
 }
+
+export interface RepositoryWithSearch<Entity> {
+  search: (search: string) => Promise<Entity[]>;
+}
