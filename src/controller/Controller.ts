@@ -152,9 +152,13 @@ class Controller<Entity extends WithMongoId, EntityData>
   };
 
   private normalize(text: string, toLowerCase = true): string {
-    const trimmedText = text.replaceAll(" ", "");
+    const textWords = text.split(" ");
 
-    return toLowerCase ? trimmedText.toLowerCase() : trimmedText;
+    if (toLowerCase) {
+      textWords[0] = textWords[0].toLowerCase();
+    }
+
+    return textWords.join("");
   }
 }
 

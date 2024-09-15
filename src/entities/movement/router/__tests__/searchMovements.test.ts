@@ -20,7 +20,7 @@ describe("Given a GET /movements/search endpoint", () => {
   });
 
   describe("When it receives a request with a search 'test'", () => {
-    test.only("Then it should respond with 200 and the movement 'Test movement'", async () => {
+    test("Then it should respond with 200 and the movement 'Test movement'", async () => {
       await Movement.create(movement1);
       await Movement.create(movement2);
 
