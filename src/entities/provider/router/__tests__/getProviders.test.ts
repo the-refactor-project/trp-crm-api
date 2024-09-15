@@ -2,7 +2,7 @@ import request from "supertest";
 import app from "../../../../server/app";
 import Provider from "../../model/Provider";
 import { ProviderEntity } from "../../ProviderEntity";
-import { createMockProviders } from "../../factories/providersFactory";
+import { mockProvidersFactory } from "../../factories/providersFactory";
 
 afterEach(async () => {
   await Provider.deleteMany();
@@ -11,7 +11,7 @@ afterEach(async () => {
 describe("Given a GET /providers endpoint", () => {
   describe("When it receives a request", () => {
     test("Then it should respond with 200 and two providers", async () => {
-      const providers = createMockProviders(2);
+      const providers = mockProvidersFactory.createMany(2);
 
       for await (const provider of providers) {
         await Provider.create(provider);

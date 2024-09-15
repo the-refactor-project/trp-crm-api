@@ -1,13 +1,13 @@
 import request from "supertest";
 import app from "../../../../server/app";
-import { createMockExpenseDatas } from "../../factories/expensesFactory";
 import { ExpenseEntity, ExpenseEntityData } from "../../ExpenseEntity";
 import ExpenseDto from "../../dto/expenseDto";
+import { mockExpensesFactory } from "../../factories/expensesFactory";
 
 describe("Given a POST /expenses endpoint", () => {
   describe("When it receives a request with a new expense's data", () => {
     test("Then it should respond with 201 and the new expense", async () => {
-      const newExpenseData = createMockExpenseDatas(1)[0];
+      const newExpenseData = mockExpensesFactory.createOneItemData();
 
       const response = await request(app)
         .post("/expenses")
@@ -32,7 +32,7 @@ describe("Given a POST /expenses endpoint", () => {
 
   describe("When it receives a request with a new expense's data without date and quantity", () => {
     test("Then it should respond with 400 and a 'Missing data' error", async () => {
-      const newExpenseData = createMockExpenseDatas(1)[0];
+      const newExpenseData = mockExpensesFactory.createOneItemData();
 
       const wrongNewExpenseData: Partial<ExpenseEntityData> = {
         ...newExpenseData,

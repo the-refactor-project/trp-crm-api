@@ -1,9 +1,9 @@
 import request from "supertest";
 import app from "../../../../server/app";
 import Expense from "../../model/Expense";
-import { createMockExpenses } from "../../factories/expensesFactory";
 import { ExpenseEntity } from "../../ExpenseEntity";
 import ExpenseDto from "../../dto/expenseDto";
+import { mockExpensesFactory } from "../../factories/expensesFactory";
 
 afterEach(async () => {
   await Expense.deleteMany();
@@ -12,7 +12,7 @@ afterEach(async () => {
 describe("Given a GET /expenses endpoint", () => {
   describe("When it receives a request", () => {
     test("Then it should respond with 200 and two expenses", async () => {
-      const expenses = createMockExpenses(2);
+      const expenses = mockExpensesFactory.createMany(2);
 
       for await (const expense of expenses) {
         await Expense.create(expense);

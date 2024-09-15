@@ -1,6 +1,6 @@
 import request from "supertest";
 import app from "../../../../server/app";
-import { createMockCourseEditions } from "../../factories/courseEditionsFactory";
+import { mockCourseEditionsFactory } from "../../factories/courseEditionsFactory";
 import CourseEdition from "../../model/CourseEdition";
 
 afterEach(async () => {
@@ -10,7 +10,7 @@ afterEach(async () => {
 describe("Given a DELETE /course-editions/:id endpoint", () => {
   describe("When it receives a request with an existing id", () => {
     test("Then it should respond with 200", async () => {
-      const courseEditions = createMockCourseEditions(1)[0];
+      const courseEditions = mockCourseEditionsFactory.createOne();
 
       await CourseEdition.create(courseEditions);
 
@@ -22,7 +22,7 @@ describe("Given a DELETE /course-editions/:id endpoint", () => {
 
   describe("When it receives a request with a non existing id", () => {
     test("Then it should respond with 404 and a 'Edition not found", async () => {
-      const courseEdition = createMockCourseEditions(1)[0];
+      const courseEdition = mockCourseEditionsFactory.createOne();
 
       const response = await request(app)
         .delete(`/course-editions/${courseEdition._id}`)

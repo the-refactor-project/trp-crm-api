@@ -15,6 +15,22 @@ class Repository<Entity extends { _id: Types.ObjectId }, EntityData>
     return items;
   }
 
+  async getByStart(
+    startField: keyof Entity,
+    startText: string,
+  ): Promise<Entity[]> {
+    const items = await this.model
+      .find({
+        name: {
+          $regex: `^${startText}`,
+          $options: "i",
+        },
+      })
+      .exec();
+
+    return items;
+  }
+
   async getById(id: Entity["_id"]): Promise<Entity> {
     const item = await this.model.findById(id);
 

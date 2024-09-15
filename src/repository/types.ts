@@ -5,6 +5,10 @@ export interface RepositoryStructure<
   EntityData,
 > {
   get: () => Promise<Entity[]>;
+  getByStart: (
+    startField: keyof Entity,
+    startText: string,
+  ) => Promise<Entity[]>;
   getById: (id: Entity["_id"]) => Promise<Entity>;
   add: (data: EntityData) => Promise<Entity>;
   updateById: (entity: Entity) => Promise<Entity>;

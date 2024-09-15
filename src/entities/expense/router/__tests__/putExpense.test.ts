@@ -2,9 +2,9 @@ import request from "supertest";
 import { Types } from "mongoose";
 import app from "../../../../server/app";
 import Expense from "../../model/Expense";
-import { createMockExpenses } from "../../factories/expensesFactory";
 import { ExpenseEntity } from "../../ExpenseEntity";
 import ExpenseDto from "../../dto/expenseDto";
+import { mockExpensesFactory } from "../../factories/expensesFactory";
 
 afterEach(async () => {
   await Expense.deleteMany();
@@ -13,7 +13,7 @@ afterEach(async () => {
 describe("Given a PUT /expenses/:expenseId endpoint", () => {
   describe("When it receives a request with an existing id", () => {
     test("Then it should respond with 200 and the updated expense", async () => {
-      const expense = createMockExpenses(1)[0];
+      const expense = mockExpensesFactory.createOne();
 
       await Expense.create(expense);
 
@@ -47,7 +47,7 @@ describe("Given a PUT /expenses/:expenseId endpoint", () => {
 
   describe("When it receives a request with a non existing id", () => {
     test("Then it should respond with 404 and a 'Expense not found", async () => {
-      const expense = createMockExpenses(1)[0];
+      const expense = mockExpensesFactory.createOne();
 
       const response = await request(app)
         .put("/expenses")
@@ -64,7 +64,7 @@ describe("Given a PUT /expenses/:expenseId endpoint", () => {
 
   describe("When it receives a request with an invalid id", () => {
     test("Then it should respond with 400 and a 'Invalid id' error", async () => {
-      const expense = createMockExpenses(1)[0];
+      const expense = mockExpensesFactory.createOne();
 
       expense._id = "invalid-id" as unknown as Types.ObjectId;
 

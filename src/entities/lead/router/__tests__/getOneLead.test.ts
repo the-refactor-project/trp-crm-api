@@ -1,9 +1,9 @@
 import request from "supertest";
 import app from "../../../../server/app";
-import { createMockLeads } from "../../factories/leadsFactory";
 import Lead from "../../model/Lead";
 import { LeadEntity } from "../../LeadEntity";
 import LeadDto from "../../dto/leadDto";
+import { mockLeadsFactory } from "../../factories/leadsFactory";
 
 afterEach(async () => {
   await Lead.deleteMany();
@@ -12,7 +12,7 @@ afterEach(async () => {
 describe("Given a GET /leads/:id endpoint", () => {
   describe("When it receives a request with an existing id", () => {
     test("Then it should respond with 200 and the lead", async () => {
-      const lead = createMockLeads(1)[0];
+      const lead = mockLeadsFactory.createOne();
 
       await Lead.create(lead);
 
@@ -30,7 +30,7 @@ describe("Given a GET /leads/:id endpoint", () => {
 
   describe("When it receives a request with a non existing id", () => {
     test("Then it should respond with 404 and a 'Lead not found", async () => {
-      const lead = createMockLeads(1)[0];
+      const lead = mockLeadsFactory.createOne();
 
       const response = await request(app).get(`/leads/${lead._id}`).expect(404);
 

@@ -1,8 +1,7 @@
 import request from "supertest";
 import app from "../../../../server/app";
-import { createMockProviders } from "../../factories/providersFactory";
 import Provider from "../../model/Provider";
-
+import { mockProvidersFactory } from "../../factories/providersFactory";
 afterEach(async () => {
   await Provider.deleteMany();
 });
@@ -10,7 +9,7 @@ afterEach(async () => {
 describe("Given a DELETE /providers/:id endpoint", () => {
   describe("When it receives a request with an existing id", () => {
     test("Then it should respond with 200", async () => {
-      const provider = createMockProviders(1)[0];
+      const provider = mockProvidersFactory.createOne();
 
       await Provider.create(provider);
 
@@ -20,7 +19,7 @@ describe("Given a DELETE /providers/:id endpoint", () => {
 
   describe("When it receives a request with a non existing id", () => {
     test("Then it should respond with 404 and a 'Provider not found", async () => {
-      const provider = createMockProviders(1)[0];
+      const provider = mockProvidersFactory.createOne();
 
       const response = await request(app)
         .delete(`/providers/${provider._id}`)

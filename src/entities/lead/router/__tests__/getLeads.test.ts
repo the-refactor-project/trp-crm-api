@@ -2,8 +2,8 @@ import request from "supertest";
 import app from "../../../../server/app";
 import Lead from "../../model/Lead";
 import { LeadEntity } from "../../LeadEntity";
-import { createMockLeads } from "../../factories/leadsFactory";
 import LeadDto from "../../dto/leadDto";
+import { mockLeadsFactory } from "../../factories/leadsFactory";
 
 afterEach(async () => {
   await Lead.deleteMany();
@@ -12,7 +12,7 @@ afterEach(async () => {
 describe("Given a GET /leads endpoint", () => {
   describe("When it receives a request", () => {
     test("Then it should respond with 200 and two leads", async () => {
-      const leads = createMockLeads(2);
+      const leads = mockLeadsFactory.createMany(2);
 
       for await (const lead of leads) {
         await Lead.create(lead);

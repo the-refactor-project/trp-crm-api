@@ -5,7 +5,7 @@ import {
   CourseEditionEntity,
   CourseEditionEntityData,
 } from "../CourseEditionEntity";
-import { createMockItemDatas, createMockItems } from "../../../factories";
+import { MockItemsFactory } from "../../../factories";
 
 const courseEditionsFactory = Factory.define<CourseEditionEntity>(() => ({
   _id: new Types.ObjectId(),
@@ -13,13 +13,7 @@ const courseEditionsFactory = Factory.define<CourseEditionEntity>(() => ({
   date: faker.date.recent(),
 }));
 
-export const createMockCourseEditions = (number = 2): CourseEditionEntity[] =>
-  createMockItems<CourseEditionEntity>(courseEditionsFactory, number);
-
-export const createMockCourseEditionsDatas = (
-  number = 2,
-): CourseEditionEntityData[] =>
-  createMockItemDatas<CourseEditionEntity, CourseEditionEntityData>(
-    courseEditionsFactory,
-    number,
-  );
+export const mockCourseEditionsFactory = new MockItemsFactory<
+  CourseEditionEntity,
+  CourseEditionEntityData
+>(courseEditionsFactory);
