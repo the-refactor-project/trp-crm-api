@@ -7,11 +7,22 @@ import {
 } from "./types";
 import { minDebounceAllowedLength } from "../../../const.js";
 import ServerError from "../../../server/errors/ServerError/ServerError.js";
+import ProvidersRepository from "../repository/ProvidersRepository.js";
 
 class ProvidersController
   extends Controller<ProviderEntity, ProviderEntityData>
   implements ProvidersControllerStructure
 {
+  constructor(
+    protected repository: ProvidersRepository,
+    entityData: {
+      singular: string;
+      plural: string;
+    },
+  ) {
+    super(repository, entityData);
+  }
+
   getByStart = async (
     req: RequestWithStartQueryParam,
     res: Response,
@@ -29,7 +40,7 @@ class ProvidersController
       return;
     }
 
-    const providers = await this.repository.getByStart("name", start);
+    const providers = await this.repository.getByStart(start);
 
     res.status(200).json({ providers });
   };

@@ -12,9 +12,14 @@ afterEach(async () => {
 describe("Given a GET /providers/start endpoint", () => {
   const start = "Test";
   const providerName = `${start} provider`;
-  const provider1 = mockProvidersFactory.createOne({ name: providerName });
+  const providerCommercialName = `Commercial ${start}`;
+  const provider1 = mockProvidersFactory.createOne({
+    name: providerName,
+    commercialName: providerCommercialName,
+  });
   const provider2 = mockProvidersFactory.createOne({
     name: "Another provider",
+    commercialName: "Commercial another provider",
   });
 
   describe("When it receives a request with a start 'test'", () => {

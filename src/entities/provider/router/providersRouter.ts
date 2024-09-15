@@ -1,15 +1,11 @@
 import { Router } from "express";
 import Provider from "../model/Provider.js";
-import Repository from "../../../repository/Repository.js";
-import { ProviderEntity, ProviderEntityData } from "../ProviderEntity.js";
 import ProvidersController from "../controller/ProvidersController.js";
+import ProvidersRepository from "../repository/ProvidersRepository.js";
 
 const providersRouter = Router();
 
-const providersRepository = new Repository<ProviderEntity, ProviderEntityData>(
-  Provider,
-  "Provider",
-);
+const providersRepository = new ProvidersRepository(Provider, "Provider");
 const providersController = new ProvidersController(providersRepository, {
   singular: "Provider",
   plural: "Providers",
