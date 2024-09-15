@@ -1,13 +1,13 @@
 import request from "supertest";
 import app from "../../../../server/app";
 import { LeadEntity, LeadEntityData } from "../../LeadEntity";
-import { createMockLeadDatas } from "../../factories/leadsFactory";
 import LeadDto from "../../dto/leadDto";
+import { mockLeadsFactory } from "../../factories/leadsFactory";
 
 describe("Given a POST /leads endpoint", () => {
   describe("When it receives a request with a new lead's data", () => {
     test("Then it should respond with 201 and the new lead", async () => {
-      const newLeadData = createMockLeadDatas(1)[0];
+      const newLeadData = mockLeadsFactory.createOneItemData();
 
       const response = await request(app)
         .post("/leads")
@@ -26,7 +26,7 @@ describe("Given a POST /leads endpoint", () => {
 
   describe("When it receives a request with a new lead's data without name", () => {
     test("Then it should respond with 400 and a 'Missing data' error", async () => {
-      const newLeadData = createMockLeadDatas(1)[0];
+      const newLeadData = mockLeadsFactory.createOneItemData();
 
       const wrongNewLeadData: Partial<LeadEntityData> = {
         ...newLeadData,

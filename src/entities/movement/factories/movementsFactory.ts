@@ -2,7 +2,7 @@ import { Factory } from "fishery";
 import { faker } from "@faker-js/faker";
 import { MovementEntity, MovementEntityData } from "../MovementEntity";
 import { currencies } from "../../../const.js";
-import { createMockItemDatas, createMockItems } from "../../../factories";
+import { MockItemsFactory } from "../../../factories";
 import { Types } from "mongoose";
 
 const movementsFactory = Factory.define<MovementEntity>(() => ({
@@ -15,11 +15,7 @@ const movementsFactory = Factory.define<MovementEntity>(() => ({
   date: faker.date.recent(),
 }));
 
-export const createMockMovements = (number = 2): MovementEntity[] =>
-  createMockItems<MovementEntity>(movementsFactory, number);
-
-export const createMockMovementDatas = (number = 2): MovementEntityData[] =>
-  createMockItemDatas<MovementEntity, MovementEntityData>(
-    movementsFactory,
-    number,
-  );
+export const mockMovementFactory = new MockItemsFactory<
+  MovementEntity,
+  MovementEntityData
+>(movementsFactory);

@@ -1,12 +1,12 @@
 import request from "supertest";
 import app from "../../../../server/app";
 import { CourseEntity, CourseEntityData } from "../../CourseEntity";
-import { createMockCourseDatas } from "../../factories/coursesFactory";
+import { mockCoursesFactory } from "../../factories/coursesFactory";
 
 describe("Given a POST /courses endpoint", () => {
   describe("When it receives a request with a new courses's data", () => {
     test("Then it should respond with 201 and the new course", async () => {
-      const newCourseData = createMockCourseDatas(1)[0];
+      const newCourseData = mockCoursesFactory.createOneItemData();
 
       const response = await request(app)
         .post("/courses")
@@ -25,7 +25,7 @@ describe("Given a POST /courses endpoint", () => {
 
   describe("When it receives a request with a new course's data without name", () => {
     test("Then it should respond with 400 and a 'Missing data' error", async () => {
-      const newCourseData = createMockCourseDatas(1)[0];
+      const newCourseData = mockCoursesFactory.createOneItemData();
 
       const wrongNewCourseData: Partial<CourseEntityData> = {
         ...newCourseData,

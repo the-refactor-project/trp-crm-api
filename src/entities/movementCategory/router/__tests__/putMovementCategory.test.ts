@@ -1,9 +1,9 @@
 import request from "supertest";
 import app from "../../../../server/app";
-import { createMockMovementCategories } from "../../factories/movementCategoriesFactory";
 import MovementCategory from "../../model/MovementCategory";
 import { MovementCategoryEntity } from "../../MovementCategoryEntity";
 import { Types } from "mongoose";
+import { mockMovementCategoriesFactory } from "../../factories/movementCategoriesFactory";
 
 afterEach(async () => {
   await MovementCategory.deleteMany();
@@ -12,7 +12,7 @@ afterEach(async () => {
 describe("Given a PUT /movement-categories/:id endpoint", () => {
   describe("When it receives a request with an existing id", () => {
     test("Then it should respond with 200 and the updated category", async () => {
-      const movementCategory = createMockMovementCategories(1)[0];
+      const movementCategory = mockMovementCategoriesFactory.createOne();
       const updatedMovementCategoryName = movementCategory.name + "!!";
 
       await MovementCategory.create(movementCategory);
@@ -41,7 +41,7 @@ describe("Given a PUT /movement-categories/:id endpoint", () => {
 
   describe("When it receives a request with a non existing id", () => {
     test("Then it should respond with 404 and a 'Category not found", async () => {
-      const movementCategory = createMockMovementCategories(1)[0];
+      const movementCategory = mockMovementCategoriesFactory.createOne();
 
       const response = await request(app)
         .put("/movement-categories")
@@ -58,7 +58,7 @@ describe("Given a PUT /movement-categories/:id endpoint", () => {
 
   describe("When it receives a request with an invalid id", () => {
     test("Then it should respond with 400 and a 'Invalid id' error", async () => {
-      const movementCategory = createMockMovementCategories(1)[0];
+      const movementCategory = mockMovementCategoriesFactory.createOne();
 
       movementCategory._id = "invalid-id" as unknown as Types.ObjectId;
 

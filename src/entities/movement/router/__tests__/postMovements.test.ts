@@ -1,13 +1,13 @@
 import request from "supertest";
 import app from "../../../../server/app";
 import { MovementEntity, MovementEntityData } from "../../MovementEntity";
-import { createMockMovementDatas } from "../../factories/movementsFactory";
 import MovementDto from "../../dto/movementDto";
+import { mockMovementFactory } from "../../factories/movementsFactory";
 
 describe("Given a POST /movements endpoint", () => {
   describe("When it receives a request with a new movement's data", () => {
     test("Then it should respond with 201 and the new movement", async () => {
-      const newMovementData = createMockMovementDatas(1)[0];
+      const newMovementData = mockMovementFactory.createOneItemData();
 
       const response = await request(app)
         .post("/movements")
@@ -28,7 +28,7 @@ describe("Given a POST /movements endpoint", () => {
 
   describe("When it receives a request with a new movement's data without date and quantity", () => {
     test("Then it should respond with 400 and a 'Missing data' error", async () => {
-      const newMovementData = createMockMovementDatas(1)[0];
+      const newMovementData = mockMovementFactory.createOneItemData();
 
       const wrongNewMovementData: Partial<MovementEntityData> = {
         ...newMovementData,

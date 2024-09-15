@@ -1,14 +1,15 @@
 import { NextFunction, Request, Response } from "express";
-import { Error, Types } from "mongoose";
+import { Error } from "mongoose";
 import { ControllerStructure } from "./types";
 import { RepositoryStructure } from "../repository/types";
 import ServerError from "../server/errors/ServerError/ServerError.js";
+import { WithMongoId } from "../types";
 
-class Controller<Entity extends { _id: Types.ObjectId }, EntityData>
+class Controller<Entity extends WithMongoId, EntityData>
   implements ControllerStructure<Entity, EntityData>
 {
   constructor(
-    private repository: RepositoryStructure<Entity, EntityData>,
+    protected repository: RepositoryStructure<Entity, EntityData>,
     private entityData: {
       singular: string;
       plural: string;

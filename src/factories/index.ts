@@ -1,24 +1,33 @@
-import { Factory } from "fishery";
-import { Types } from "mongoose";
+import { DeepPartial, Factory } from "fishery";
+import { WithMongoId } from "../types";
 
-export const createMockItems = <Item>(
+export class MockItemsFactory<Item extends WithMongoId, ItemData> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  factory: Factory<Item, any, Item>,
-  number = 2,
-): Item[] => factory.buildList(number);
+  constructor(private factory: Factory<Item, any, Item>) {}
 
-export const createMockItemDatas = <
-  Item extends { _id: Types.ObjectId },
-  ItemData,
->(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  factory: Factory<Item, any, Item>,
-  number = 2,
-): ItemData[] =>
-  createMockItems<Item>(factory, number).map<ItemData>((item) => {
-    const newItemData: ItemData = { ...item } as unknown as ItemData;
+  public createOne(params?: DeepPartial<Item>): Item {
+    return this.factory.build(params);
+  }
 
-    delete (newItemData as Partial<Item>)._id;
+  public createOneItemData(params?: DeepPartial<Item>): ItemData {
+    const newItemData = this.createOne(params) as Partial<Item>;
 
-    return newItemData;
-  });
+    delete newItemData._id;
+
+    return newItemData as ItemData;
+  }
+
+  public createMany(number = 2): Item[] {
+    return this.factory.buildList(number);
+  }
+
+  public createManyItemData(number = 2): ItemData[] {
+    return this.createMany(number).map<ItemData>((item) => {
+      const newItemData: ItemData = { ...item } as unknown as ItemData;
+
+      delete (newItemData as Partial<Item>)._id;
+
+      return newItemData;
+    });
+  }
+}

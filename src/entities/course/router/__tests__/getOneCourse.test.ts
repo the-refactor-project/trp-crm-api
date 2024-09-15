@@ -1,8 +1,8 @@
 import request from "supertest";
 import app from "../../../../server/app";
-import { createMockCourses } from "../../factories/coursesFactory";
 import Course from "../../model/Course";
 import { CourseEntity } from "../../CourseEntity";
+import { mockCoursesFactory } from "../../factories/coursesFactory";
 
 afterEach(async () => {
   await Course.deleteMany();
@@ -11,7 +11,7 @@ afterEach(async () => {
 describe("Given a GET /courses/:id endpoint", () => {
   describe("When it receives a request with an existing id", () => {
     test("Then it should respond with 200 and the course", async () => {
-      const course = createMockCourses(1)[0];
+      const course = mockCoursesFactory.createOne();
 
       await Course.create(course);
 
@@ -31,7 +31,7 @@ describe("Given a GET /courses/:id endpoint", () => {
 
   describe("When it receives a request with a non existing id", () => {
     test("Then it should respond with 404 and a 'Course not found", async () => {
-      const course = createMockCourses(1)[0];
+      const course = mockCoursesFactory.createOne();
 
       const response = await request(app)
         .get(`/courses/${course._id}`)

@@ -1,9 +1,9 @@
 import { Factory } from "fishery";
 import { faker } from "@faker-js/faker";
-import { LeadEntity, LeadEntityData } from "../LeadEntity";
-import { createMockItemDatas, createMockItems } from "../../../factories";
 import { Types } from "mongoose";
+import { LeadEntity, LeadEntityData } from "../LeadEntity";
 import Nif from "../../../Nif/Nif";
+import { MockItemsFactory } from "../../../factories";
 
 const leadsFactory = Factory.define<LeadEntity>(() => ({
   _id: new Types.ObjectId(),
@@ -27,8 +27,7 @@ const leadsFactory = Factory.define<LeadEntity>(() => ({
   referralOf: faker.person.firstName(),
 }));
 
-export const createMockLeads = (number = 2): LeadEntity[] =>
-  createMockItems<LeadEntity>(leadsFactory, number);
-
-export const createMockLeadDatas = (number = 2): LeadEntityData[] =>
-  createMockItemDatas<LeadEntity, LeadEntityData>(leadsFactory, number);
+export const mockLeadsFactory = new MockItemsFactory<
+  LeadEntity,
+  LeadEntityData
+>(leadsFactory);

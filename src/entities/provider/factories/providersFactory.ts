@@ -1,12 +1,12 @@
 import { Factory } from "fishery";
 import { faker } from "@faker-js/faker";
+import { Types } from "mongoose";
 import { currencies } from "../../../const.js";
 import { ProviderEntity, ProviderEntityData } from "../ProviderEntity";
-import { createMockItemDatas, createMockItems } from "../../../factories";
-import { Types } from "mongoose";
 import Nif from "../../../Nif/Nif.js";
+import { MockItemsFactory } from "../../../factories/index.js";
 
-const providersFactory = Factory.define<ProviderEntity>(() => ({
+export const providersFactory = Factory.define<ProviderEntity>(() => ({
   _id: new Types.ObjectId(),
   name: faker.company.name(),
   commercialName: faker.company.name(),
@@ -23,11 +23,7 @@ const providersFactory = Factory.define<ProviderEntity>(() => ({
   },
 }));
 
-export const createMockProviders = (number = 2): ProviderEntity[] =>
-  createMockItems<ProviderEntity>(providersFactory, number);
-
-export const createMockProviderDatas = (number = 2): ProviderEntityData[] =>
-  createMockItemDatas<ProviderEntity, ProviderEntityData>(
-    providersFactory,
-    number,
-  );
+export const mockProvidersFactory = new MockItemsFactory<
+  ProviderEntity,
+  ProviderEntityData
+>(providersFactory);

@@ -1,11 +1,11 @@
+import { Types } from "mongoose";
 import { Factory } from "fishery";
 import { faker } from "@faker-js/faker";
 import {
   MovementCategoryEntity,
   MovementCategoryEntityData,
 } from "../MovementCategoryEntity";
-import { createMockItemDatas, createMockItems } from "../../../factories";
-import { Types } from "mongoose";
+import { MockItemsFactory } from "../../../factories";
 
 const movementCategoriesFactory = Factory.define<MovementCategoryEntity>(
   () => ({
@@ -14,15 +14,7 @@ const movementCategoriesFactory = Factory.define<MovementCategoryEntity>(
   }),
 );
 
-export const createMockMovementCategories = (
-  number = 2,
-): MovementCategoryEntity[] =>
-  createMockItems<MovementCategoryEntity>(movementCategoriesFactory, number);
-
-export const createMockMovementCategoryDatas = (
-  number = 2,
-): MovementCategoryEntityData[] =>
-  createMockItemDatas<MovementCategoryEntity, MovementCategoryEntityData>(
-    movementCategoriesFactory,
-    number,
-  );
+export const mockMovementCategoriesFactory = new MockItemsFactory<
+  MovementCategoryEntity,
+  MovementCategoryEntityData
+>(movementCategoriesFactory);

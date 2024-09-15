@@ -1,7 +1,7 @@
 import request from "supertest";
 import app from "../../../../server/app";
 import CourseEdition from "../../model/CourseEdition";
-import { createMockCourseEditions } from "../../factories/courseEditionsFactory";
+import { mockCourseEditionsFactory } from "../../factories/courseEditionsFactory";
 import { CourseEditionEntity } from "../../CourseEditionEntity";
 import CourseEditionDto from "../../dto/courseEditionDto";
 
@@ -12,7 +12,7 @@ afterEach(async () => {
 describe("Given a GET /course-editions endpoint", () => {
   describe("When it receives a request", () => {
     test("Then it should respond with 200 and two course editions", async () => {
-      const courseEditions = createMockCourseEditions(2);
+      const courseEditions = mockCourseEditionsFactory.createMany(2);
 
       for await (const courseEdition of courseEditions) {
         await CourseEdition.create(courseEdition);

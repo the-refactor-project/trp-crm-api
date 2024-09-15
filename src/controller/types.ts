@@ -1,10 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { Types } from "mongoose";
+import { WithMongoId } from "../types";
 
-export interface ControllerStructure<
-  Entity extends { _id: Types.ObjectId },
-  EntityData,
-> {
+export interface ControllerStructure<Entity extends WithMongoId, EntityData> {
   get: (req: Request, res: Response) => Promise<void>;
   getById: (
     req: Request<{ id: Entity["_id"] }>,

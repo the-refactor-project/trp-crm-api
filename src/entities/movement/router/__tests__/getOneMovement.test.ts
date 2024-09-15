@@ -1,9 +1,9 @@
 import request from "supertest";
 import app from "../../../../server/app";
-import { createMockMovements } from "../../factories/movementsFactory";
 import Movement from "../../model/Movement";
 import { MovementEntity } from "../../MovementEntity";
 import MovementDto from "../../dto/movementDto";
+import { mockMovementFactory } from "../../factories/movementsFactory";
 
 afterEach(async () => {
   await Movement.deleteMany();
@@ -12,7 +12,7 @@ afterEach(async () => {
 describe("Given a GET /movements/:movementId endpoint", () => {
   describe("When it receives a request with an existing id", () => {
     test("Then it should respond with 200 and the movement", async () => {
-      const movement = createMockMovements(1)[0];
+      const movement = mockMovementFactory.createOne();
 
       await Movement.create(movement);
 
@@ -32,7 +32,7 @@ describe("Given a GET /movements/:movementId endpoint", () => {
 
   describe("When it receives a request with a non existing id", () => {
     test("Then it should respond with 404 and a 'Movement not found", async () => {
-      const movement = createMockMovements(1)[0];
+      const movement = mockMovementFactory.createOne();
 
       const response = await request(app)
         .get(`/movements/${movement._id}`)

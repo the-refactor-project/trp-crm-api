@@ -1,7 +1,8 @@
-import { Model, Types } from "mongoose";
+import { Model } from "mongoose";
 import { RepositoryStructure } from "./types";
+import { WithMongoId } from "../types";
 
-class Repository<Entity extends { _id: Types.ObjectId }, EntityData>
+class Repository<Entity extends WithMongoId, EntityData>
   implements RepositoryStructure<Entity, EntityData>
 {
   constructor(
@@ -11,6 +12,22 @@ class Repository<Entity extends { _id: Types.ObjectId }, EntityData>
 
   async get(): Promise<Entity[]> {
     const items = await this.model.find().exec();
+
+    return items;
+  }
+
+  async getByStart(
+    startField: keyof Entity,
+    startText: string,
+  ): Promise<Entity[]> {
+    const items = await this.model
+      .find({
+        name: {
+          $regex: `^${startText}`,
+          $options: "i",
+        },
+      })
+      .exec();
 
     return items;
   }

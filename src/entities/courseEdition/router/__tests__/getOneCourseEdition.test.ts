@@ -1,6 +1,6 @@
 import request from "supertest";
 import app from "../../../../server/app";
-import { createMockCourseEditions } from "../../factories/courseEditionsFactory";
+import { mockCourseEditionsFactory } from "../../factories/courseEditionsFactory";
 import CourseEditionDto from "../../dto/courseEditionDto";
 import CourseEdition from "../../model/CourseEdition";
 import { CourseEditionEntity } from "../../CourseEditionEntity";
@@ -12,7 +12,7 @@ afterEach(async () => {
 describe("Given a GET /course-editions/:id endpoint", () => {
   describe("When it receives a request with an existing id", () => {
     test("Then it should respond with 200 and the edition", async () => {
-      const courseEdition = createMockCourseEditions(1)[0];
+      const courseEdition = mockCourseEditionsFactory.createOne();
 
       await CourseEdition.create(courseEdition);
 
@@ -32,7 +32,7 @@ describe("Given a GET /course-editions/:id endpoint", () => {
 
   describe("When it receives a request with a non existing id", () => {
     test("Then it should respond with 404 and a 'Edition not found", async () => {
-      const courseEdition = createMockCourseEditions(1)[0];
+      const courseEdition = mockCourseEditionsFactory.createOne();
 
       const response = await request(app)
         .get(`/course-editions/${courseEdition._id}`)

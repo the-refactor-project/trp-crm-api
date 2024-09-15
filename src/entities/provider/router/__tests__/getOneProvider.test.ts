@@ -1,7 +1,7 @@
 import request from "supertest";
 import app from "../../../../server/app";
-import { createMockProviders } from "../../factories/providersFactory";
 import Provider from "../../model/Provider";
+import { mockProvidersFactory } from "../../factories/providersFactory";
 import { ProviderEntity } from "../../ProviderEntity";
 
 afterEach(async () => {
@@ -11,7 +11,7 @@ afterEach(async () => {
 describe("Given a GET /providers/:id endpoint", () => {
   describe("When it receives a request with an existing id", () => {
     test("Then it should respond with 200 and the provider", async () => {
-      const provider = createMockProviders(1)[0];
+      const provider = mockProvidersFactory.createOne();
 
       await Provider.create(provider);
 
@@ -34,7 +34,7 @@ describe("Given a GET /providers/:id endpoint", () => {
 
   describe("When it receives a request with a non existing id", () => {
     test("Then it should respond with 404 and a 'Provider not found", async () => {
-      const provider = createMockProviders(1)[0];
+      const provider = mockProvidersFactory.createOne();
 
       const response = await request(app)
         .get(`/providers/${provider._id}`)

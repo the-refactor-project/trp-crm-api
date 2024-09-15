@@ -1,7 +1,7 @@
 import request from "supertest";
 import app from "../../../../server/app";
 import Expense from "../../model/Expense";
-import { createMockExpenses } from "../../factories/expensesFactory";
+import { mockExpensesFactory } from "../../factories/expensesFactory";
 
 afterEach(async () => {
   await Expense.deleteMany();
@@ -10,7 +10,7 @@ afterEach(async () => {
 describe("Given a DELETE /expenses/:expenseId endpoint", () => {
   describe("When it receives a request with an existing id", () => {
     test("Then it should respond with 200", async () => {
-      const expense = createMockExpenses(1)[0];
+      const expense = mockExpensesFactory.createOne();
 
       await Expense.create(expense);
 
@@ -20,7 +20,7 @@ describe("Given a DELETE /expenses/:expenseId endpoint", () => {
 
   describe("When it receives a request with a non existing id", () => {
     test("Then it should respond with 404 and a 'Expense not found", async () => {
-      const expense = createMockExpenses(1)[0];
+      const expense = mockExpensesFactory.createOne();
 
       const response = await request(app)
         .delete(`/expenses/${expense._id}`)

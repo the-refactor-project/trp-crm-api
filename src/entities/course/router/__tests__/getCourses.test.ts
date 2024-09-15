@@ -2,7 +2,7 @@ import request from "supertest";
 import app from "../../../../server/app";
 import Course from "../../model/Course";
 import { CourseEntity } from "../../CourseEntity";
-import { createMockCourses } from "../../factories/coursesFactory";
+import { mockCoursesFactory } from "../../factories/coursesFactory";
 
 afterEach(async () => {
   await Course.deleteMany();
@@ -11,7 +11,7 @@ afterEach(async () => {
 describe("Given a GET /courses endpoint", () => {
   describe("When it receives a request", () => {
     test("Then it should respond with 200 and two courses", async () => {
-      const courses = createMockCourses(2);
+      const courses = mockCoursesFactory.createMany(2);
 
       for await (const course of courses) {
         await Course.create(course);

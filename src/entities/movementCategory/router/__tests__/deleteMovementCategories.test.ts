@@ -1,7 +1,7 @@
 import request from "supertest";
 import app from "../../../../server/app";
-import { createMockMovementCategories } from "../../factories/movementCategoriesFactory";
 import MovementCategory from "../../model/MovementCategory";
+import { mockMovementCategoriesFactory } from "../../factories/movementCategoriesFactory";
 
 afterEach(async () => {
   await MovementCategory.deleteMany();
@@ -10,7 +10,7 @@ afterEach(async () => {
 describe("Given a DELETE /movement-categories/:id endpoint", () => {
   describe("When it receives a request with an existing id", () => {
     test("Then it should respond with 200", async () => {
-      const movementCategory = createMockMovementCategories(1)[0];
+      const movementCategory = mockMovementCategoriesFactory.createOne();
 
       await MovementCategory.create(movementCategory);
 
@@ -22,7 +22,7 @@ describe("Given a DELETE /movement-categories/:id endpoint", () => {
 
   describe("When it receives a request with a non existing id", () => {
     test("Then it should respond with 404 and a 'Category not found", async () => {
-      const movementCategory = createMockMovementCategories(1)[0];
+      const movementCategory = mockMovementCategoriesFactory.createOne();
 
       const response = await request(app)
         .delete(`/movement-categories/${movementCategory._id}`)

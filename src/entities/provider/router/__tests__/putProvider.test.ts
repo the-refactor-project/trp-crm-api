@@ -1,9 +1,9 @@
 import request from "supertest";
+import { Types } from "mongoose";
 import app from "../../../../server/app";
-import { createMockProviders } from "../../factories/providersFactory";
 import Provider from "../../model/Provider";
 import { ProviderEntity } from "../../ProviderEntity";
-import { Types } from "mongoose";
+import { mockProvidersFactory } from "../../factories/providersFactory";
 
 afterEach(async () => {
   await Provider.deleteMany();
@@ -12,7 +12,7 @@ afterEach(async () => {
 describe("Given a PUT /providers/:id endpoint", () => {
   describe("When it receives a request with an existing id", () => {
     test("Then it should respond with 200 and the updated provider", async () => {
-      const provider = createMockProviders(1)[0];
+      const provider = mockProvidersFactory.createOne();
 
       await Provider.create(provider);
 
@@ -41,7 +41,7 @@ describe("Given a PUT /providers/:id endpoint", () => {
 
   describe("When it receives a request with a non existing id", () => {
     test("Then it should respond with 404 and a 'Provider not found", async () => {
-      const provider = createMockProviders(1)[0];
+      const provider = mockProvidersFactory.createOne();
 
       const response = await request(app)
         .put("/providers")
@@ -58,7 +58,7 @@ describe("Given a PUT /providers/:id endpoint", () => {
 
   describe("When it receives a request with an invalid id", () => {
     test("Then it should respond with 400 and a 'Invalid id' error", async () => {
-      const provider = createMockProviders(1)[0];
+      const provider = mockProvidersFactory.createOne();
 
       provider._id = "invalid-id" as unknown as Types.ObjectId;
 
