@@ -6,28 +6,12 @@ class Repository<Entity extends WithMongoId, EntityData>
   implements RepositoryStructure<Entity, EntityData>
 {
   constructor(
-    private model: Model<Entity>,
+    protected model: Model<Entity>,
     private entityName: string,
   ) {}
 
   async get(): Promise<Entity[]> {
     const items = await this.model.find().exec();
-
-    return items;
-  }
-
-  async getByStart(
-    startField: keyof Entity,
-    startText: string,
-  ): Promise<Entity[]> {
-    const items = await this.model
-      .find({
-        name: {
-          $regex: `^${startText}`,
-          $options: "i",
-        },
-      })
-      .exec();
 
     return items;
   }
