@@ -1,17 +1,18 @@
 import { NextFunction, Response } from "express";
 import Controller from "../../../controller/Controller.js";
-import { ProviderEntity, ProviderEntityData } from "../ProviderEntity.js";
-import { ProvidersControllerStructure, RequestWithSearchParam } from "./types";
 import { minDebounceAllowedLength } from "../../../const.js";
 import ServerError from "../../../server/errors/ServerError/ServerError.js";
-import ProvidersRepository from "../repository/ProvidersRepository.js";
+import { ControllerWithSearch } from "../../../controller/types.js";
+import { MovementEntity, MovementEntityData } from "../MovementEntity.js";
+import MovementsRepository from "../repository/MovementsRepository.js";
+import { RequestWithSearchParam } from "../../provider/controller/types.js";
 
-class ProvidersController
-  extends Controller<ProviderEntity, ProviderEntityData>
-  implements ProvidersControllerStructure
+class MovementsController
+  extends Controller<MovementEntity, MovementEntityData>
+  implements ControllerWithSearch
 {
   constructor(
-    protected repository: ProvidersRepository,
+    protected repository: MovementsRepository,
     entityData: {
       singular: string;
       plural: string;
@@ -24,7 +25,7 @@ class ProvidersController
     req: RequestWithSearchParam,
     res: Response,
     next: NextFunction,
-  ) => {
+  ): Promise<void> => {
     const { search } = req.params;
 
     if (search.length < minDebounceAllowedLength) {
@@ -37,10 +38,10 @@ class ProvidersController
       return;
     }
 
-    const providers = await this.repository.search(search);
+    const movements = await this.repository.search(search);
 
-    res.status(200).json({ providers });
+    res.status(200).json({ movements });
   };
 }
 
-export default ProvidersController;
+export default MovementsController;

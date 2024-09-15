@@ -3,7 +3,7 @@ import app from "../../../../server/app";
 import Movement from "../../model/Movement";
 import { MovementEntity } from "../../MovementEntity";
 import MovementDto from "../../dto/movementDto";
-import { mockMovementFactory } from "../../factories/movementsFactory";
+import { mockMovementsFactory } from "../../factories/movementsFactory";
 
 afterEach(async () => {
   await Movement.deleteMany();
@@ -12,7 +12,7 @@ afterEach(async () => {
 describe("Given a GET /movements endpoint", () => {
   describe("When it receives a request", () => {
     test("Then it should respond with 200 and two movements 'test in' and 'test out'", async () => {
-      const movements = mockMovementFactory.createMany(2);
+      const movements = mockMovementsFactory.createMany(2);
 
       for await (const movement of movements) {
         await Movement.create(movement);

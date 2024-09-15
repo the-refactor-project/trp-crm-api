@@ -12,7 +12,7 @@ const providersController = new ProvidersController(providersRepository, {
 });
 
 providersRouter.get("/", providersController.get);
-providersRouter.get("/start/:start", providersController.getByStart);
+providersRouter.get("/search/:search", providersController.search);
 providersRouter.get("/:id", providersController.getById);
 providersRouter.post("/", providersController.add);
 providersRouter.put("/", providersController.updateById);

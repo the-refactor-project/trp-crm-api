@@ -24,3 +24,15 @@ export interface ControllerStructure<Entity extends WithMongoId, EntityData> {
     next: NextFunction,
   ) => Promise<void>;
 }
+
+export type RequestWithSearchParams = Request<{
+  search: string;
+}>;
+
+export interface ControllerWithSearch {
+  search: (
+    req: RequestWithSearchParams,
+    res: Response,
+    next: NextFunction,
+  ) => Promise<void>;
+}

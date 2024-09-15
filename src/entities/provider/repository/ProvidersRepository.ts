@@ -6,19 +6,19 @@ class ProvidersRepository
   extends Repository<ProviderEntity, ProviderEntityData>
   implements ProvidersRepositoryStructure
 {
-  async getByStart(startText: string): Promise<ProviderEntity[]> {
+  async search(search: string): Promise<ProviderEntity[]> {
     const items = await this.model
       .find({
         $or: [
           {
             name: {
-              $regex: `${startText}`,
+              $regex: search,
               $options: "i",
             },
           },
           {
             commercialName: {
-              $regex: `${startText}`,
+              $regex: search,
               $options: "i",
             },
           },
