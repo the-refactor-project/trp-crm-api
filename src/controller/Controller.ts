@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { Error } from "mongoose";
-import { ControllerStructure } from "./types";
+import { ControllerStructure, EntityNames } from "./types";
 import { RepositoryStructure } from "../repository/types";
 import ServerError from "../server/errors/ServerError/ServerError.js";
 import { WithMongoId } from "../types";
@@ -10,16 +10,13 @@ class Controller<Entity extends WithMongoId, EntityData>
 {
   constructor(
     protected repository: RepositoryStructure<Entity, EntityData>,
-    private entityData: {
-      singular: string;
-      plural: string;
-    },
+    private entityNames: EntityNames,
   ) {}
 
   get = async (_req: Request, res: Response): Promise<void> => {
     const items = await this.repository.get();
 
-    res.status(200).json({ [this.normalize(this.entityData.plural)]: items });
+    res.status(200).json({ [this.normalize(this.entityNames.plural)]: items });
   };
 
   getById = async (
@@ -34,17 +31,17 @@ class Controller<Entity extends WithMongoId, EntityData>
 
       res
         .status(200)
-        .json({ [this.normalize(this.entityData.singular)]: item });
+        .json({ [this.normalize(this.entityNames.singular)]: item });
     } catch (error) {
       let serverError: ServerError;
 
       if (error instanceof Error.CastError) {
         serverError = new ServerError("Invalid id", 400, error.message);
-      } else if (error.message === `${this.entityData.singular} not found`) {
+      } else if (error.message === `${this.entityNames.singular} not found`) {
         serverError = new ServerError(error.message, 404, error.message);
       } else {
         serverError = new ServerError(
-          `Error deleting the ${this.entityData.singular}`,
+          `Error deleting the ${this.entityNames.singular}`,
           500,
           error.message,
         );
@@ -66,7 +63,7 @@ class Controller<Entity extends WithMongoId, EntityData>
 
       res
         .status(201)
-        .json({ [this.normalize(this.entityData.singular)]: item });
+        .json({ [this.normalize(this.entityNames.singular)]: item });
     } catch (error) {
       let serverError: ServerError;
 
@@ -78,7 +75,7 @@ class Controller<Entity extends WithMongoId, EntityData>
         );
       } else {
         serverError = new ServerError(
-          `Error creating the ${this.entityData.singular}`,
+          `Error creating the ${this.entityNames.singular}`,
           500,
           error.message,
         );
@@ -99,7 +96,7 @@ class Controller<Entity extends WithMongoId, EntityData>
       const updatedItem = await this.repository.updateById(item);
 
       res.status(200).json({
-        [`updated${this.normalize(this.entityData.singular, false)}`]:
+        [`updated${this.normalize(this.entityNames.singular, false)}`]:
           updatedItem,
       });
     } catch (error) {
@@ -107,11 +104,11 @@ class Controller<Entity extends WithMongoId, EntityData>
 
       if (error instanceof Error.CastError) {
         serverError = new ServerError("Invalid id", 400, error.message);
-      } else if (error.message === `${this.entityData.singular} not found`) {
+      } else if (error.message === `${this.entityNames.singular} not found`) {
         serverError = new ServerError(error.message, 404, error.message);
       } else {
         serverError = new ServerError(
-          `Error deleting the ${this.entityData.singular}`,
+          `Error deleting the ${this.entityNames.singular}`,
           500,
           error.message,
         );
@@ -137,11 +134,11 @@ class Controller<Entity extends WithMongoId, EntityData>
 
       if (error instanceof Error.CastError) {
         serverError = new ServerError("Invalid id", 400, error.message);
-      } else if (error.message === `${this.entityData.singular} not found`) {
+      } else if (error.message === `${this.entityNames.singular} not found`) {
         serverError = new ServerError(error.message, 404, error.message);
       } else {
         serverError = new ServerError(
-          `Error deleting the ${this.entityData.singular}`,
+          `Error deleting the ${this.entityNames.singular}`,
           500,
           error.message,
         );

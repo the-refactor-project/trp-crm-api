@@ -8,6 +8,7 @@ const leadEventsFactory = Factory.define<LeadEventEntity>(() => ({
   _id: new Types.ObjectId(),
   description: faker.lorem.sentence(),
   date: faker.date.recent(),
+  leadId: new Types.ObjectId(),
 }));
 
 export const mockLeadEventsFactory = new MockItemsFactory<
