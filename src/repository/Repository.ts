@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { FilterQuery, Model } from "mongoose";
 import { RepositoryStructure } from "./types";
 import { WithMongoId } from "../types";
 
@@ -10,8 +10,10 @@ class Repository<Entity extends WithMongoId, EntityData>
     private entityName: string,
   ) {}
 
-  async get(): Promise<Entity[]> {
-    const items = await this.model.find().exec();
+  async get(filter?: FilterQuery<Entity>): Promise<Entity[]> {
+    const query = this.model.find(filter ?? {});
+
+    const items = await query.exec();
 
     return items;
   }

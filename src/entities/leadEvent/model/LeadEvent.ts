@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
 import { LeadEventEntity } from "../LeadEventEntity.js";
 
 const leadEventSchema = new Schema<LeadEventEntity>({
@@ -9,6 +9,11 @@ const leadEventSchema = new Schema<LeadEventEntity>({
   date: {
     type: Date,
     default: new Date(),
+  },
+  leadId: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Lead",
+    required: true,
   },
 });
 

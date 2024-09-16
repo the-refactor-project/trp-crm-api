@@ -1,6 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { WithMongoId } from "../types";
 
+export interface EntityNames {
+  singular: string;
+  plural: string;
+}
+
 export interface ControllerStructure<Entity extends WithMongoId, EntityData> {
   get: (req: Request, res: Response) => Promise<void>;
   getById: (
