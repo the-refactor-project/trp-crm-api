@@ -25,6 +25,7 @@ const leadsFactory = Factory.define<LeadEntity>(() => ({
   origin: faker.lorem.word(),
   phoneNumber: faker.phone.number(),
   referralOf: faker.person.firstName(),
+  gitHubUsername: faker.internet.userName(),
 }));
 
 export const mockLeadsFactory = new MockItemsFactory<

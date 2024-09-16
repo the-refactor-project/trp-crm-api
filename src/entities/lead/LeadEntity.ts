@@ -14,6 +14,7 @@ export class LeadEntityData {
   entryDate: Date;
   askedFor?: string;
   formComments?: string;
+  gitHubUsername?: string;
 }
 
 export class LeadEntity extends LeadEntityData {
