@@ -38,6 +38,7 @@ const leadSchema = new Schema<LeadEntity>({
   },
   askedFor: String,
   formComments: String,
+  githubUsername: String,
 });
 
 const Lead = model("Lead", leadSchema, "leads");
